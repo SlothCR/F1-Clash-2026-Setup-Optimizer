@@ -1,0 +1,16 @@
+{
+ "Singapore": {"stat1": "raceStart", "stat2": "speed"},
+ "Montreal": {"stat1": "raceStart", "stat2": "powerUnit"},
+ "Silverstone": {"stat1": "tyre", "stat2": "speed"},
+ "Spa": {"stat1": "overtaking", "stat2": "powerUnit"},
+ "Spielberg": {"stat1": "raceStart", "stat2": "cornering"},
+ "Las Vegas": {"stat1": "overtaking", "stat2": "speed"},
+ "Abu Dhabi": {"stat1": "overtaking", "stat2": "speed"},
+ "Miami": {"stat1": "overtaking", "stat2": "speed"},
+ "Hungary": {"stat1": "overtaking", "stat2": "cornering"},
+ "Sao Paulo": {"stat1": "overtaking", "stat2": "powerUnit"},
+ "Barcelona": {"stat1": "tyre", "stat2": "speed"},
+ "Jeddah": {"stat1": "defending", "stat2": "speed"},
+ "Melbourne": {"stat1": "raceStart", "stat2": "cornering"},
+ "Shanghai": {"stat1": "defending", "stat2": "powerUnit"}
+}
