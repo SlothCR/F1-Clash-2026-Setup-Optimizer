@@ -298,6 +298,7 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
     <div class="kpi" style="--stat-color:#00B0F0"><div class="val" id="kOM" style="color:#00B0F0">0</div><div class="lbl">OT Mode</div></div>
     <div class="kpi total"><div class="val" id="kTotal">0</div><div class="lbl">Total</div></div>
   </div>
+  <div id="kpiBoostLabel" style="display:none;font-size:10px;color:#f59e0b;margin-left:8px;white-space:nowrap;align-self:center">⚡ Includes Race Boost</div>
 </div>
 
 <div class="layout">
@@ -1822,14 +1823,13 @@ function recalculate() {
     COMP_TYPES.map(t => renderRow(t, bestOwnedW[t])).join('');
   const wSums = renderTotals(bestOwnedW, 'customTotals');
 
-  // Apply race boost to KPI bar
+  // Apply race boost to KPI bar (pit time excluded — formula is track-dependent and unknown)
   let kpiS = wSums.s, kpiC = wSums.c, kpiP = wSums.p, kpiQ = wSums.q, kpiT = wSums.t, kpiOM = wSums.om;
   const boost = BOOSTS.find(b => b.name === state.selectedBoost);
   if (boost) {
     kpiS += boost.speed;
     kpiC += boost.cornering;
     kpiP += boost.powerUnit;
-    kpiT = Math.max(0, kpiT - boost.pitTime);
   }
 
   document.getElementById('kSpd').textContent = kpiS;
@@ -1839,6 +1839,7 @@ function recalculate() {
   document.getElementById('kPit').textContent = kpiT.toFixed(2);
   document.getElementById('kOM').textContent = kpiOM;
   document.getElementById('kTotal').textContent = kpiS + kpiC + kpiP + kpiQ + kpiOM;
+  document.getElementById('kpiBoostLabel').style.display = boost ? 'block' : 'none';
 
   // Best From My Inventory (Unweighted)
   const bestOwnedU = findBestOwnedUnweighted();
