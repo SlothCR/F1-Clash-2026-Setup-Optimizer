@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F1 Clash 2026 Setup Optimizer v3.7</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1923;--card:#1a2332;--card2:#1e2d3d;--card3:#243447;--accent:#e10600;--accent2:#ff1801;--blue:#3b82f6;--green:#10b981;--yellow:#f59e0b;--purple:#8b5cf6;--text:#e0e8f0;--text2:#8899aa;--border:#2a3a4a;--pit:#E10600}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:13px;overflow-x:hidden}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--card)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#4a5a6a}
+
+/* Header */
+.header{background:linear-gradient(135deg,#1a2332 0%,#0f1923 100%);padding:12px 20px;display:flex;align-items:center;gap:20px;border-bottom:2px solid var(--accent);flex-wrap:wrap}
+.header h1{color:white;font-size:22px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.header h1 .f1{color:var(--accent);font-weight:900}
+.header h1 .year{color:var(--text2);font-size:14px;font-weight:400}
+
+/* KPI Bar */
+.kpi-bar{display:flex;gap:2px;flex-wrap:wrap}
+.kpi{background:var(--card2);padding:8px 14px;text-align:center;min-width:80px}
+.kpi:first-child{border-radius:6px 0 0 6px}
+.kpi:last-child{border-radius:0 6px 6px 0}
+.kpi .val{font-size:18px;font-weight:700;color:white}
+.kpi .lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.kpi.speed .val{color:#3b82f6}
+.kpi.corn .val{color:#f59e0b}
+.kpi.pu .val{color:#10b981}
+.kpi.qual .val{color:#8b5cf6}
+.kpi.pit .val{color:var(--pit)}
+.kpi.total{background:var(--accent)}
+.kpi.total .val{color:white}
+.kpi.total .lbl{color:#ffaaaa}
+
+/* Layout */
+.layout{display:flex;height:calc(100vh - 62px);overflow:hidden}
+.panel{overflow-y:auto;padding:12px}
+.panel-left{width:380px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border)}
+.panel-right{flex:1;background:var(--bg)}
+
+/* Section headers */
+.section-title{color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.section-title:first-child{margin-top:0}
+.section-title .icon{font-size:14px}
+
+/* Section notes */
+.section-note{font-size:11px;color:var(--text2);margin:-6px 0 10px;line-height:1.4}
+
+/* Collapsible inventory sections */
+.inv-group{background:var(--card2);border-radius:6px;margin-bottom:6px;border:1px solid var(--border);overflow:hidden}
+.inv-group-header{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;cursor:pointer;user-select:none;transition:background .2s}
+.inv-group-header:hover{background:var(--card3)}
+.inv-group-header .type-name{font-size:12px;font-weight:600;color:white;text-transform:uppercase;letter-spacing:.5px}
+.inv-group-header .owned-count{font-size:10px;color:var(--green);font-weight:600}
+.inv-group-header .chevron{color:var(--text2);font-size:12px;transition:transform .2s}
+.inv-group-header .chevron.open{transform:rotate(90deg)}
+.inv-group-body{display:none;padding:4px 8px 8px}
+.inv-group-body.open{display:block}
+
+/* Inventory rows */
+.inv-row{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.inv-row:last-child{border-bottom:none}
+.inv-row .comp-name{font-size:11px;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inv-row .slot-rarity{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;flex-shrink:0}
+.inv-row input[type=number]{width:42px;background:var(--card3);color:var(--text);border:1px solid var(--border);border-radius:3px;padding:2px 4px;font-size:11px;text-align:center}
+.inv-row input[type=number]:focus{outline:none;border-color:var(--blue)}
+.inv-row input[type=number].owned{border-color:var(--green);background:rgba(16,185,129,0.1)}
+.inv-row .lvl-label{font-size:9px;color:var(--text2);flex-shrink:0}
+
+/* Boost checkbox */
+.boost-check{-webkit-appearance:none;appearance:none;width:16px;height:16px;border:2px solid #FFD966;border-radius:3px;background:transparent;cursor:pointer;flex-shrink:0;position:relative}
+.boost-check:checked{background:#FFD966}
+.boost-check:checked::after{content:'✓';position:absolute;top:-1px;left:2px;font-size:12px;font-weight:700;color:#1a2332}
+
+/* Active setup selectors */
+.setup-select-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.setup-select-row .slot-type{font-size:10px;color:var(--text2);width:70px;flex-shrink:0;text-transform:uppercase;letter-spacing:.3px}
+.setup-select-row select{flex:1;background:var(--card3);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:4px 6px;font-size:11px;cursor:pointer}
+.setup-select-row select:focus{outline:none;border-color:var(--blue)}
+
+/* Rarity colors */
+.rarity-Common{background:#3273FA;color:white}
+.rarity-Rare{background:#FF941A;color:white}
+.rarity-Epic{background:#FF00FF;color:white}
+.rarity-Legendary{background:#D4AF37;color:white}
+.rarity-Starter{background:#888;color:white}
+
+/* Component slots */
+.slot{background:var(--card2);border-radius:6px;padding:10px;margin-bottom:8px;border:1px solid var(--border);transition:border-color .2s}
+.slot:hover{border-color:var(--blue)}
+.slot-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.slot-type{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.slot-rarity{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600}
+.slot-stats{display:flex;gap:3px;flex-wrap:wrap}
+.stat-chip{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;display:flex;align-items:center;gap:3px}
+.stat-chip.spd{background:rgba(59,130,246,.15);color:#60a5fa}
+.stat-chip.crn{background:rgba(245,158,11,.15);color:#fbbf24}
+.stat-chip.pow{background:rgba(16,185,129,.15);color:#34d399}
+.stat-chip.qua{background:rgba(139,92,246,.15);color:#a78bfa}
+.stat-chip.pit{background:rgba(225,6,0,.15);color:#E10600}
+.stat-chip.om{background:rgba(0,176,240,.15);color:#00B0F0}
+.stat-chip.tot{background:rgba(255,255,255,.08);color:white;font-weight:700}
+
+/* Weights */
+.weights-grid{display:grid;grid-template-columns:1fr;gap:4px}
+.weight-row{display:flex;align-items:center;gap:8px;padding:4px 0}
+.weight-row label{font-size:11px;color:var(--text2);width:80px;flex-shrink:0}
+.weight-row input[type=range]{flex:1;height:4px;-webkit-appearance:none;background:var(--border);border-radius:2px;outline:none}
+.weight-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--blue);cursor:pointer}
+.weight-row .weight-val{width:24px;text-align:center;font-size:12px;font-weight:600;color:white}
+.weight-note{font-size:10px;color:var(--text2);padding:6px 4px 2px;line-height:1.5;border-top:1px solid var(--border);margin-top:4px}
+
+/* Results */
+.results-section{margin-bottom:20px}
+.results-title{font-size:14px;font-weight:700;color:white;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.results-title .badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600}
+.badge-overall{background:var(--green);color:white}
+.badge-custom{background:var(--blue);color:white}
+.badge-mine{background:var(--purple);color:white}
+.badge-theory{background:var(--yellow);color:#1a1a1a}
+.badge-ai{background:#e10600;color:white}
+
+.rec-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px}
+.rec-table th{background:var(--card2);color:var(--text2);padding:6px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0}
+.rec-table td{padding:5px 8px;border-bottom:1px solid var(--border)}
+.rec-table tr:hover{background:var(--card2)}
+.rec-table .num{text-align:right}
+.rec-table .comp-name{font-weight:600;color:white}
+.rec-table .comp-level{color:var(--text2);font-size:11px}
+
+.totals-bar{display:flex;gap:2px;margin-top:8px;flex-wrap:wrap}
+.totals-bar .kpi{padding:6px 12px}
+.totals-bar .kpi .val{font-size:16px}
+
+/* AI Compare table */
+.ai-compare-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:12px}
+.ai-compare-table th{background:var(--card2);color:var(--text2);padding:5px 6px;text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:.3px;position:sticky;top:0;white-space:nowrap}
+.ai-compare-table td{padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-size:11px}
+.ai-compare-table td:first-child{text-align:center}
+.ai-compare-table td:nth-child(2){text-align:left;font-weight:600;color:white}
+.ai-compare-table tr:hover{background:var(--card2)}
+.ai-compare-table tr.rank-row{background:var(--card2);border-top:1px solid var(--border)}
+.ai-compare-table tr.rank-row td{font-size:10px;color:var(--text2);font-weight:600}
+.ai-compare-table .driver-header{color:#60a5fa}
+.ai-compare-table .car-header{color:#a78bfa}
+.ai-compare-table .driver-stat-header{background:#2a3a5a;color:#a0c4ff}
+.ai-compare-table .car-stat-header{background:#3a2a4a;color:#d4b5ff}
+.cell-above{background:rgba(16,185,129,0.15);color:#34d399}
+.cell-below{background:rgba(225,6,0,0.15);color:#E10600}
+
+/* Tabs */
+.tab-bar{display:flex;gap:2px;margin-bottom:12px}
+.tab-btn{padding:6px 14px;background:var(--card2);color:var(--text2);border:none;border-radius:4px 4px 0 0;cursor:pointer;font-size:12px;transition:all .2s}
+.tab-btn.active{background:var(--blue);color:white}
+.tab-btn:hover:not(.active){background:var(--card3)}
+
+/* Loading overlay */
+.loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999}
+.loading-overlay .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-overlay .msg{color:var(--text2);font-size:14px}
+.error-box{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:20px;max-width:500px;text-align:center}
+.error-box h2{color:var(--accent);margin-bottom:10px;font-size:18px}
+.error-box p{color:var(--text2);font-size:13px;line-height:1.6;margin-bottom:8px}
+.error-box code{background:var(--card3);padding:4px 8px;border-radius:4px;font-size:12px;color:var(--green)}
+
+/* Series selector */
+.series-selector{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.series-selector label{font-size:12px;color:var(--text2)}
+.series-selector select{background:var(--card3);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:5px 8px;font-size:12px;cursor:pointer}
+
+/* Light theme */
+body[data-theme="light"]{--bg:#f0f2f5;--card:#ffffff;--card2:#f8f9fa;--card3:#e9ecef;--text:#1a1a2e;--text2:#6c757d;--border:#dee2e6}
+body[data-theme="light"] .header{background:linear-gradient(135deg,#ffffff 0%,#f0f2f5 100%);border-bottom-color:var(--accent)}
+body[data-theme="light"] .header h1{color:#1a1a2e}
+body[data-theme="light"] .kpi .val{color:#1a1a2e}
+body[data-theme="light"] .kpi.speed .val{color:#2563eb}
+body[data-theme="light"] .kpi.corn .val{color:#d97706}
+body[data-theme="light"] .kpi.pu .val{color:#059669}
+body[data-theme="light"] .kpi.qual .val{color:#7c3aed}
+body[data-theme="light"] .kpi.pit .val{color:#dc2626}
+body[data-theme="light"] .kpi.total{background:var(--accent)}
+body[data-theme="light"] .kpi.total .val{color:white}
+body[data-theme="light"] .inv-row .comp-name{color:#1a1a2e}
+body[data-theme="light"] .rec-table .comp-name{color:#1a1a2e}
+body[data-theme="light"] .rec-table th{background:#e9ecef;color:#495057}
+body[data-theme="light"] .rec-table td{border-bottom-color:#dee2e6}
+body[data-theme="light"] .ai-compare-table th{background:#e9ecef;color:#495057}
+body[data-theme="light"] .ai-compare-table td{border-bottom-color:#dee2e6}
+body[data-theme="light"] .ai-compare-table td:nth-child(2){color:#1a1a2e}
+body[data-theme="light"] .inv-row input[type=number]{background:#ffffff;color:#1a1a2e;border-color:#ced4da}
+body[data-theme="light"] .inv-row input[type=number].owned{border-color:#059669;background:rgba(5,150,105,0.1)}
+body[data-theme="light"] .weight-row .weight-val{color:#1a1a2e}
+body[data-theme="light"] .inv-group{background:#ffffff;border-color:#dee2e6}
+body[data-theme="light"] .inv-group-header .type-name{color:#1a1a2e}
+body[data-theme="light"] .inv-group-header:hover{background:#f8f9fa}
+body[data-theme="light"] .section-title{color:#6c757d;border-bottom-color:#dee2e6}
+body[data-theme="light"] .tab-btn{background:#e9ecef;color:#6c757d}
+body[data-theme="light"] .tab-btn.active{background:var(--blue);color:white}
+body[data-theme="light"] .results-title{color:#1a1a2e}
+body[data-theme="light"] .totals-bar .kpi{background:#f8f9fa}
+body[data-theme="light"] .totals-bar .kpi.total{background:var(--accent)}
+body[data-theme="light"] .totals-bar .kpi.total .val{color:white}
+body[data-theme="light"] .totals-bar .kpi.total .lbl{color:#ffaaaa}
+body[data-theme="light"] .ai-compare-table .driver-header{color:#2563eb}
+body[data-theme="light"] .ai-compare-table .car-header{color:#7c3aed}
+body[data-theme="light"] .ai-compare-table .driver-stat-header{background:#dbeafe;color:#1e40af}
+body[data-theme="light"] .ai-compare-table .car-stat-header{background:#ede9fe;color:#5b21b6}
+body[data-theme="light"] .loading-overlay{background:#f0f2f5}
+
+/* Responsive */
+@media(max-width:900px){
+  .layout{flex-direction:column;height:auto}
+  .panel-left{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:none}
+  .panel-right{min-height:auto}
+  .panel{padding:10px}
+  .header{padding:10px 14px;gap:10px}
+  .header h1{font-size:18px}
+  .kpi-bar{gap:1px}
+  .kpi{padding:6px 10px;min-width:60px}
+  .kpi .val{font-size:14px}
+  .kpi .lbl{font-size:8px}
+  .tab-bar{flex-wrap:wrap;gap:3px}
+  .tab-btn{padding:6px 10px;font-size:11px}
+  .rec-table{font-size:11px}
+  .rec-table th,.rec-table td{padding:4px 5px}
+  .ai-compare-table{font-size:10px}
+  .ai-compare-table th,.ai-compare-table td{padding:3px 4px}
+  .totals-bar{gap:1px}
+  .totals-bar .kpi{padding:5px 8px}
+  .totals-bar .kpi .val{font-size:14px}
+  .series-selector{flex-wrap:wrap}
+}
+
+@media(max-width:600px){
+  .header{flex-direction:column;align-items:flex-start;gap:8px}
+  .header h1{font-size:16px}
+  .kpi-bar{width:100%;justify-content:space-between}
+  .kpi{flex:1;min-width:0;padding:5px 4px}
+  .kpi .val{font-size:12px}
+  .kpi .lbl{font-size:7px;letter-spacing:0}
+  .panel{padding:8px}
+  .layout{height:auto;overflow:visible}
+  .panel-left,.panel-right{overflow:visible}
+  .inv-row{gap:4px;padding:4px 0}
+  .inv-row .comp-name{font-size:10px}
+  .inv-row input[type=number]{width:36px;font-size:10px}
+  .weight-row label{width:60px;font-size:10px}
+  .weight-row input[type=range]{height:6px}
+  .weight-row input[type=range]::-webkit-slider-thumb{width:18px;height:18px}
+  .weight-row .weight-val{font-size:11px}
+  .slot{padding:8px}
+  .slot-stats{gap:2px}
+  .stat-chip{font-size:9px;padding:2px 4px}
+  .rec-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .ai-compare-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tab-bar{gap:2px}
+  .tab-btn{padding:5px 8px;font-size:10px;flex:1;text-align:center}
+  .section-title{font-size:10px;margin:12px 0 6px}
+  .results-title{font-size:12px}
+  .series-selector{gap:6px}
+  .series-selector label{font-size:11px}
+  .series-selector select{font-size:11px;padding:6px 8px}
+  .setup-select-row{flex-wrap:wrap}
+  .setup-select-row .slot-type{width:auto}
+  .boost-check{width:20px;height:20px}
+}
+
+@media(max-width:400px){
+  .header h1{font-size:14px}
+  .kpi .val{font-size:11px}
+  .inv-group-header{padding:6px 8px}
+  .inv-group-header .type-name{font-size:11px}
+  .tab-btn{font-size:9px;padding:4px 6px}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="msg">Loading component &amp; driver data...</div>
+</div>
+
+<div class="header">
+  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.7</span></h1>
+  <button id="themeToggle" onclick="toggleTheme()" style="background:none;border:none;font-size:20px;cursor:pointer;padding:4px 8px" title="Toggle Day/Night mode">🌙</button>
+  <div class="kpi-bar" id="kpiBar">
+    <div class="kpi speed"><div class="val" id="kSpd">0</div><div class="lbl">Speed</div></div>
+    <div class="kpi corn"><div class="val" id="kCrn">0</div><div class="lbl">Cornering</div></div>
+    <div class="kpi pu"><div class="val" id="kPU">0</div><div class="lbl">Power Unit</div></div>
+    <div class="kpi qual"><div class="val" id="kQual">0</div><div class="lbl">Qualifying</div></div>
+    <div class="kpi pit"><div class="val" id="kPit">0.00</div><div class="lbl">Pit Time</div></div>
+    <div class="kpi" style="--stat-color:#00B0F0"><div class="val" id="kOM" style="color:#00B0F0">0</div><div class="lbl">OT Mode</div></div>
+    <div class="kpi total"><div class="val" id="kTotal">0</div><div class="lbl">Total</div></div>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- LEFT PANEL -->
+  <div class="panel panel-left">
+    <!-- Event Boost -->
+    <div class="section-title"><span class="icon">🚀</span> Event Boost</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <label style="font-size:12px;color:var(--text2)">Boost %</label>
+      <input type="number" id="boostPct" min="0" max="100" value="10"
+        style="width:60px;background:var(--card3);color:#FFD966;border:2px solid #FFD966;border-radius:4px;padding:4px 8px;font-size:14px;font-weight:700;text-align:center"
+        onchange="onBoostPctChange(this.value)" oninput="onBoostPctChange(this.value)">
+      <span style="font-size:11px;color:var(--text2)">Applied to checked items</span>
+    </div>
+
+    <!-- Race Boost -->
+    <div class="section-title"><span class="icon">⚡</span> Race Boost</div>
+    <div style="margin-bottom:12px">
+      <select id="boostSelect" onchange="onBoostChange(this.value)" style="width:100%;background:var(--card3);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:5px 8px;font-size:12px">
+        <option value="">— No Boost —</option>
+      </select>
+      <div id="boostStats" style="margin-top:6px"></div>
+    </div>
+
+    <div class="section-title"><span class="icon">📦</span> My Component Inventory</div>
+    <div id="inventorySlots"></div>
+
+    <div class="section-title"><span class="icon">👤</span> My Driver Inventory</div>
+    <div id="driverInventorySlots"></div>
+
+    <div class="section-title"><span class="icon">⚖️</span> Component Weights</div>
+    <div class="weights-grid" id="compWeights"></div>
+    <div class="weight-note" id="compWeightNote"></div>
+
+    <div class="section-title" style="margin-top:16px"><span class="icon">🏁</span> Driver Weights</div>
+    <div class="weights-grid" id="driverWeights"></div>
+    <div class="weight-note" id="driverWeightNote"></div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel panel-right">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('results',this)">📊 Results</button>
+      <button class="tab-btn" onclick="showTab('granprix',this)">🏆 Grand Prix</button>
+    </div>
+
+    <div id="tabResults">
+      <!-- My Best Setup (Weighted) -->
+      <div class="results-section">
+        <div class="results-title">
+          <span class="badge badge-custom">TUNED</span>
+          My Best Setup (Weighted)
+        </div>
+        <div class="section-note">Best component per slot from your owned inventory, scored using your Component Weights.</div>
+        <table class="rec-table">
+          <thead><tr><th>Slot</th><th>Component</th><th>Lvl</th><th class="num">Spd</th><th class="num">Crn</th><th class="num">PU</th><th class="num">Qual</th><th class="num">Pit</th><th class="num">OT</th><th class="num">Total</th></tr></thead>
+          <tbody id="customBody"></tbody>
+        </table>
+        <div class="totals-bar" id="customTotals"></div>
+      </div>
+
+      <!-- Best From My Inventory (Unweighted) -->
+      <div class="results-section">
+        <div class="results-title">
+          <span class="badge badge-overall">BEST</span>
+          Best From My Inventory (Unweighted)
+        </div>
+        <div class="section-note">Best component per slot by raw stat total (Speed + Cornering + Power Unit + Qualifying + OT Mode).</div>
+        <table class="rec-table">
+          <thead><tr><th>Slot</th><th>Component</th><th>Lvl</th><th class="num">Spd</th><th class="num">Crn</th><th class="num">PU</th><th class="num">Qual</th><th class="num">Pit</th><th class="num">OT</th><th class="num">Total</th></tr></thead>
+          <tbody id="overallBody"></tbody>
+        </table>
+        <div class="totals-bar" id="overallTotals"></div>
+      </div>
+
+      <!-- Drivers (Weighted) -->
+      <div class="results-section">
+        <div class="results-title">
+          <span class="badge badge-custom">TUNED</span>
+          My Best Drivers (Weighted)
+        </div>
+        <div class="section-note">Top 2 drivers from your inventory, ranked by Driver Weights.</div>
+        <div id="driverResults" style="color:var(--text2);font-size:12px;padding:8px">
+          Add drivers in the left panel to see weighted recommendations.
+        </div>
+      </div>
+
+      <!-- AI Compare -->
+      <div class="results-section">
+        <div class="results-title">
+          <span class="badge badge-ai">AI</span>
+          AI Compare
+        </div>
+        <div class="section-note">Compare your setup against AI bot loadouts. Green = you're above, Red = you're below.</div>
+        <div class="series-selector">
+          <label>Series:</label>
+          <select id="aiSeriesSelect" onchange="renderAICompare()">
+            <option value="">— Select —</option>
+          </select>
+        </div>
+        <div id="aiCompareBody"></div>
+      </div>
+
+      <!-- Upgrade Advisor -->
+      <div class="results-section">
+        <div class="results-title">
+          <span class="badge" style="background:#FFD966;color:#1a1a1a">UPGRADE</span>
+          Upgrade Advisor
+        </div>
+        <div class="section-note">Shows which owned components/drivers would improve your setup the most if leveled up by 1.</div>
+        <div id="upgradeAdvisorBody"></div>
+      </div>
+    </div>
+
+    <!-- Grand Prix Tab -->
+    <div id="tabGranPrix" style="display:none">
+      <!-- GP Category selector -->
+      <div class="series-selector" style="margin-bottom:8px">
+        <label>Category:</label>
+        <select id="gpCategorySelect" onchange="onGPCategoryChange(this.value)">
+          <option value="">— Select Category —</option>
+          <option value="Junior">Junior (up to Series 3)</option>
+          <option value="Challenger">Challenger (up to Series 6)</option>
+          <option value="Contender">Contender (up to Series 9)</option>
+          <option value="Champions">Champions (all Series)</option>
+        </select>
+      </div>
+
+      <!-- GP Suggested Setup -->
+      <div class="results-section" id="gpSuggestedSetup" style="display:none">
+        <div class="results-title">
+          <span class="badge badge-custom">TUNED</span>
+          Suggested GP Setup
+        </div>
+        <div class="section-note" id="gpSetupNote"></div>
+        <table class="rec-table">
+          <thead><tr><th>Slot</th><th>Component</th><th>Lvl</th><th class="num">Spd</th><th class="num">Crn</th><th class="num">PU</th><th class="num">Qual</th><th class="num">Pit</th><th class="num">OT</th><th class="num">Total</th></tr></thead>
+          <tbody id="gpSetupBody"></tbody>
+        </table>
+        <div class="totals-bar" id="gpSetupTotals"></div>
+
+        <!-- GP Suggested Drivers -->
+        <div style="margin-top:12px">
+          <div class="results-title" style="font-size:13px">
+            <span class="badge badge-custom">TUNED</span>
+            Suggested GP Drivers
+          </div>
+          <div id="gpDriverResults"></div>
+        </div>
+      </div>
+
+      <!-- GP AI Compare -->
+      <div class="results-section">
+        <div class="results-title">
+          <span class="badge badge-ai">GP</span>
+          Grand Prix AI Compare
+        </div>
+        <div class="section-note">Compare your setup against Grand Prix AI bot loadouts.</div>
+        <div class="series-selector">
+          <label>Location:</label>
+          <select id="gpSeriesSelect" onchange="onGPLocationChange()">
+            <option value="">— Select Location —</option>
+          </select>
+        </div>
+        <div id="gpTrackFocus" style="margin-top:4px;font-size:11px"></div>
+        <div id="gpCompareBody"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ============================================================
+// GLOBALS — populated by init()
+// ============================================================
+let COMPONENTS = [];
+let COMP_META = {};
+const COMP_TYPES = ["Brakes","Gearbox","RearWing","FrontWing","Suspension","Engine","Battery"];
+const RARITY_MAX = { Starter: 1, Common: 11, Rare: 9, Epic: 8, Legendary: 5 };
+const RARITY_ORDER = ['Common','Rare','Epic','Legendary'];
+
+let DRIVERS = [];
+let DRIVER_META = {};
+let AI_COMPARE = {};
+let GP_COMPARE = {};
+let BOOSTS = [];
+let TRACK_STATS = {};
+
+const GP_CATEGORY_MAX_SERIES = {
+  'Junior': 3,
+  'Challenger': 6,
+  'Contender': 9,
+  'Champions': 12
+};
+</script>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  inventory: {},
+  driverInventory: {},
+  compWeights: { speed: 1, cornering: 1, pu: 1, qualifying: 1, pit: 1, overtakeMode: 1 },
+  driverWeights: { overtaking: 1, defending: 1, qualifying: 1, raceStart: 1, tyre: 1 },
+  aiSeries: '',
+  gpSeries: '',
+  gpCategory: '',
+  boostPct: 10,
+  boostedComponents: {},
+  boostedDrivers: {},
+  selectedBoost: ''
+};
+
+const STORAGE_KEY = 'f1clash_optimizer_v3';
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      inventory: state.inventory,
+      driverInventory: state.driverInventory,
+      compWeights: state.compWeights,
+      driverWeights: state.driverWeights,
+      aiSeries: state.aiSeries,
+      gpSeries: state.gpSeries,
+      gpCategory: state.gpCategory,
+      boostPct: state.boostPct,
+      boostedComponents: state.boostedComponents,
+      boostedDrivers: state.boostedDrivers,
+      selectedBoost: state.selectedBoost
+    }));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!saved) return;
+    if (saved.inventory) {
+      Object.keys(saved.inventory).forEach(k => {
+        if (k in state.inventory) state.inventory[k] = saved.inventory[k];
+      });
+    }
+    if (saved.driverInventory) {
+      Object.keys(saved.driverInventory).forEach(k => {
+        if (k in state.driverInventory) state.driverInventory[k] = saved.driverInventory[k];
+      });
+    }
+    if (saved.compWeights) Object.assign(state.compWeights, saved.compWeights);
+    if (saved.driverWeights) Object.assign(state.driverWeights, saved.driverWeights);
+    if (saved.aiSeries) state.aiSeries = saved.aiSeries;
+    if (saved.gpSeries) state.gpSeries = saved.gpSeries;
+    if (saved.gpCategory) state.gpCategory = saved.gpCategory;
+    if (saved.boostPct != null) state.boostPct = saved.boostPct;
+    if (saved.boostedComponents) Object.assign(state.boostedComponents, saved.boostedComponents);
+    if (saved.boostedDrivers) Object.assign(state.boostedDrivers, saved.boostedDrivers);
+    if (saved.selectedBoost != null) state.selectedBoost = saved.selectedBoost;
+  } catch(e) {}
+}
+
+// ============================================================
+// DATA PROCESSING
+// ============================================================
+function processComponents(compData) {
+  COMPONENTS = compData.map(c => ({
+    n: c.name, y: c.type, r: c.rarity, l: c.level,
+    s: c.speed, c: c.cornering, p: c.powerUnit, q: c.qualifying, t: c.pitTime,
+    om: c.overtakeMode || 0,
+    series: c.series
+  }));
+
+  COMP_META = {};
+  const seen = new Set();
+  COMPONENTS.forEach(comp => {
+    if (!COMP_META[comp.y]) COMP_META[comp.y] = [];
+    const key = comp.n + '|' + comp.r;
+    if (!seen.has(key)) {
+      seen.add(key);
+      const maxLvl = RARITY_MAX[comp.r] || 8;
+      COMP_META[comp.y].push({ name: comp.n, rarity: comp.r, maxLevel: maxLvl, series: comp.series });
+    }
+  });
+
+  Object.values(COMP_META).flat().forEach(m => {
+    if (m.rarity === 'Starter') {
+      state.inventory[m.name] = 1;
+    } else if (!(m.name in state.inventory)) {
+      state.inventory[m.name] = 0;
+    }
+  });
+}
+
+function processDrivers(driverData) {
+  DRIVERS = driverData.map(d => ({
+    name: d.name, rarity: d.rarity, level: d.level,
+    ov: d.overtaking, def: d.defending, qual: d.qualifying,
+    rs: d.raceStart, tyre: d.tyre, total: d.total, series: d.series
+  }));
+
+  DRIVER_META = {};
+  const seen = new Set();
+  DRIVERS.forEach(d => {
+    const key = d.name + '_' + d.rarity;
+    if (!seen.has(key)) {
+      seen.add(key);
+      const maxLvl = RARITY_MAX[d.rarity] || 5;
+      if (!DRIVER_META[d.rarity]) DRIVER_META[d.rarity] = [];
+      DRIVER_META[d.rarity].push({ name: d.name, rarity: d.rarity, maxLevel: maxLvl, key: key, series: d.series });
+    }
+  });
+
+  RARITY_ORDER.forEach(r => {
+    if (DRIVER_META[r]) DRIVER_META[r].sort((a, b) => a.name.localeCompare(b.name));
+  });
+
+  Object.values(DRIVER_META).flat().forEach(m => {
+    if (!(m.key in state.driverInventory)) state.driverInventory[m.key] = 0;
+  });
+}
+
+// ============================================================
+// HELPER FUNCTIONS
+// ============================================================
+function getByType(type) { return COMPONENTS.filter(c => c.y === type); }
+function getComp(name, level) { return COMPONENTS.find(c => c.n === name && c.l === level); }
+function getDriver(name, rarity, level) { return DRIVERS.find(d => d.name === name && d.rarity === rarity && d.level === level); }
+
+function getEffectiveComp(name, level) {
+  const comp = getComp(name, level);
+  if (!comp) return null;
+  const isBoosted = state.boostedComponents[name] || false;
+  if (!isBoosted || state.boostPct <= 0) return comp;
+  const mult = 1 + state.boostPct / 100;
+  return {
+    ...comp,
+    s: Math.ceil(comp.s * mult),
+    c: Math.ceil(comp.c * mult),
+    p: Math.ceil(comp.p * mult),
+    q: Math.ceil(comp.q * mult),
+    om: Math.ceil(comp.om * mult),
+    t: Math.round(comp.t * (1 - state.boostPct / 100) * 100) / 100,
+    _boosted: true
+  };
+}
+
+function getEffectiveDriver(name, rarity, level) {
+  const d = getDriver(name, rarity, level);
+  if (!d) return null;
+  const key = name + '_' + rarity;
+  const isBoosted = state.boostedDrivers[key] || false;
+  if (!isBoosted || state.boostPct <= 0) return d;
+  const mult = 1 + state.boostPct / 100;
+  return {
+    ...d,
+    ov: Math.ceil(d.ov * mult),
+    def: Math.ceil(d.def * mult),
+    qual: Math.ceil(d.qual * mult),
+    rs: Math.ceil(d.rs * mult),
+    tyre: Math.ceil(d.tyre * mult),
+    total: Math.ceil(d.ov * mult) + Math.ceil(d.def * mult) + Math.ceil(d.qual * mult) + Math.ceil(d.rs * mult) + Math.ceil(d.tyre * mult),
+    _boosted: true
+  };
+}
+
+function getOwnedForType(type) {
+  const result = [];
+  const meta = COMP_META[type] || [];
+  meta.forEach(m => {
+    const lvl = state.inventory[m.name] || 0;
+    if (lvl > 0) {
+      const comp = getEffectiveComp(m.name, lvl);
+      if (comp) result.push(comp);
+    }
+  });
+  if (result.length === 0) {
+    const starter = meta.find(m => m.rarity === 'Starter');
+    if (starter) {
+      const comp = getComp(starter.name, 1);
+      if (comp) result.push(comp);
+    }
+  }
+  return result;
+}
+
+function getOwnedDrivers() {
+  const result = [];
+  Object.values(DRIVER_META).flat().forEach(m => {
+    const lvl = state.driverInventory[m.key] || 0;
+    if (lvl > 0) {
+      const d = getEffectiveDriver(m.name, m.rarity, lvl);
+      if (d) result.push({ ...d, key: m.key });
+    }
+  });
+  return result;
+}
+
+function getTopDrivers(count) {
+  const owned = getOwnedDrivers();
+  if (owned.length === 0) return [];
+  owned.sort((a, b) => driverWeightedScore(b) - driverWeightedScore(a));
+  // Deduplicate by driver name — can't use same driver twice regardless of rarity
+  const result = [];
+  const usedNames = new Set();
+  for (const d of owned) {
+    if (!usedNames.has(d.name)) {
+      usedNames.add(d.name);
+      result.push(d);
+      if (result.length >= count) break;
+    }
+  }
+  return result;
+}
+
+// ============================================================
+// OPTIMIZER ENGINE — weight² formula
+// ============================================================
+function unweightedTotal(c) { return c.s + c.c + c.p + c.q + c.om; }
+
+function weightedScore(c) {
+  const w = state.compWeights;
+  const baseScore = (c.s * w.speed * w.speed) + (c.c * w.cornering * w.cornering) + 
+                    (c.p * w.pu * w.pu) + (c.q * w.qualifying * w.qualifying) +
+                    (c.om * w.overtakeMode * w.overtakeMode);
+  const pitScore = c.t > 0 ? (1 / c.t) * w.pit * w.pit * 50 : 0;
+  return baseScore + pitScore;
+}
+
+function driverWeightedScore(d) {
+  const w = state.driverWeights;
+  return (d.ov * w.overtaking * w.overtaking) + (d.def * w.defending * w.defending) + 
+         (d.qual * w.qualifying * w.qualifying) + (d.rs * w.raceStart * w.raceStart) + 
+         (d.tyre * w.tyre * w.tyre);
+}
+
+function findBestOwnedUnweighted() {
+  const result = {};
+  COMP_TYPES.forEach(type => {
+    const owned = getOwnedForType(type);
+    let best = null, bestScore = -1;
+    owned.forEach(c => {
+      const score = unweightedTotal(c);
+      if (score > bestScore || (score === bestScore && c.t < (best ? best.t : 999))) {
+        bestScore = score; best = c;
+      }
+    });
+    result[type] = best;
+  });
+  return result;
+}
+
+function findBestOwnedWeighted() {
+  const result = {};
+  COMP_TYPES.forEach(type => {
+    const owned = getOwnedForType(type);
+    let best = null, bestScore = -Infinity;
+    owned.forEach(c => {
+      const score = weightedScore(c);
+      if (score > bestScore) {
+        bestScore = score;
+        best = c;
+      }
+    });
+    result[type] = best;
+  });
+  return result;
+}
+</script>
+
+<script>
+// ============================================================
+// UI RENDERING — Component Inventory
+// ============================================================
+function renderInventory() {
+  const container = document.getElementById('inventorySlots');
+  container.innerHTML = '';
+  COMP_TYPES.forEach(type => {
+    const meta = (COMP_META[type] || []).slice().sort((a, b) => {
+      if (a.rarity === 'Starter' && b.rarity !== 'Starter') return -1;
+      if (b.rarity === 'Starter' && a.rarity !== 'Starter') return 1;
+      return (a.series || 99) - (b.series || 99);
+    });
+    const displayType = type.replace(/([A-Z])/g, ' $1').trim();
+    const ownedCount = meta.filter(m => (state.inventory[m.name] || 0) > 0).length;
+
+    const group = document.createElement('div');
+    group.className = 'inv-group';
+    group.innerHTML = `
+      <div class="inv-group-header" onclick="toggleGroup('comp-${type}')">
+        <span class="type-name">${displayType}</span>
+        <span class="owned-count">${ownedCount}/${meta.length} owned</span>
+        <span class="chevron" id="chev-comp-${type}">&#9654;</span>
+      </div>
+      <div class="inv-group-body" id="body-comp-${type}">
+        ${meta.map(m => {
+          const lvl = state.inventory[m.name] || 0;
+          const safeId = m.name.replace(/[\s.]/g,'_');
+          const isBoosted = state.boostedComponents[m.name] || false;
+          if (m.rarity === 'Starter') {
+            return `<div class="inv-row">
+              <span class="comp-name">${m.name}</span>
+              <span class="slot-rarity rarity-${m.rarity}">Starter</span>
+              <span class="lvl-label">Lvl</span>
+              <span style="width:42px;text-align:center;font-size:11px;color:var(--text2)">1</span>
+              <input type="checkbox" class="boost-check" id="boost-${safeId}"
+                ${isBoosted ? 'checked' : ''}
+                onchange="onBoostToggle('comp', '${m.name.replace(/'/g,"\\'")}', this.checked)">
+            </div>`;
+          }
+          return `<div class="inv-row">
+            <span class="comp-name">${m.name}</span>
+            <span class="slot-rarity rarity-${m.rarity}">${m.rarity}</span>
+            <span class="lvl-label">Lvl</span>
+            <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
+              class="${lvl > 0 ? 'owned' : ''}"
+              id="inv-${safeId}"
+              onchange="onInventoryChange('${m.name.replace(/'/g,"\\'")}', this.value, ${m.maxLevel})"
+              oninput="onInventoryChange('${m.name.replace(/'/g,"\\'")}', this.value, ${m.maxLevel})">
+            <input type="checkbox" class="boost-check" id="boost-${safeId}"
+              ${isBoosted ? 'checked' : ''}
+              onchange="onBoostToggle('comp', '${m.name.replace(/'/g,"\\'")}', this.checked)">
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    container.appendChild(group);
+  });
+}
+
+// ============================================================
+// UI RENDERING — Driver Inventory
+// ============================================================
+function renderDriverInventory() {
+  const container = document.getElementById('driverInventorySlots');
+  container.innerHTML = '';
+  RARITY_ORDER.forEach(rarity => {
+    const meta = (DRIVER_META[rarity] || []).slice().sort((a, b) => a.name.localeCompare(b.name));
+    if (meta.length === 0) return;
+    const ownedCount = meta.filter(m => (state.driverInventory[m.key] || 0) > 0).length;
+
+    const group = document.createElement('div');
+    group.className = 'inv-group';
+    group.innerHTML = `
+      <div class="inv-group-header" onclick="toggleGroup('drv-${rarity}')">
+        <span class="type-name">${rarity} Drivers</span>
+        <span class="owned-count">${ownedCount}/${meta.length} owned</span>
+        <span class="chevron" id="chev-drv-${rarity}">&#9654;</span>
+      </div>
+      <div class="inv-group-body" id="body-drv-${rarity}">
+        ${meta.map(m => {
+          const lvl = state.driverInventory[m.key] || 0;
+          const safeKey = m.key.replace(/[\s.]/g,'_');
+          const isBoosted = state.boostedDrivers[m.key] || false;
+          return `<div class="inv-row">
+            <span class="comp-name">${m.name}</span>
+            <span class="slot-rarity rarity-${m.rarity}">${m.rarity}</span>
+            <span class="lvl-label">Lvl</span>
+            <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
+              class="${lvl > 0 ? 'owned' : ''}"
+              id="dinv-${safeKey}"
+              onchange="onDriverInventoryChange('${m.key}', this.value, ${m.maxLevel})"
+              oninput="onDriverInventoryChange('${m.key}', this.value, ${m.maxLevel})">
+            <input type="checkbox" class="boost-check" id="dboost-${safeKey}"
+              ${isBoosted ? 'checked' : ''}
+              onchange="onBoostToggle('drv', '${m.key}', this.checked)">
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    container.appendChild(group);
+  });
+}
+
+// ============================================================
+// UI RENDERING — Weights
+// ============================================================
+function renderWeights() {
+  const compContainer = document.getElementById('compWeights');
+  const compLabels = [
+    { key: 'speed', label: 'Speed', color: '#3b82f6' },
+    { key: 'cornering', label: 'Cornering', color: '#f59e0b' },
+    { key: 'pu', label: 'Power Unit', color: '#10b981' },
+    { key: 'qualifying', label: 'Qualifying', color: '#8b5cf6' },
+    { key: 'pit', label: 'Pit Time', color: '#E10600' },
+    { key: 'overtakeMode', label: 'OT Mode', color: '#00B0F0' }
+  ];
+  compContainer.innerHTML = compLabels.map(w => `
+    <div class="weight-row">
+      <label style="color:${w.color}">${w.label}</label>
+      <input type="range" min="1" max="10" value="${state.compWeights[w.key]}"
+        id="cw-${w.key}" oninput="onCompWeight('${w.key}', this.value)"
+        style="accent-color:${w.color}">
+      <span class="weight-val" id="cwv-${w.key}">${state.compWeights[w.key]}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('compWeightNote').innerHTML =
+    '💡 Rate how important each stat is for your playstyle (1 = low priority, 10 = top priority). Uses weight² so high values strongly dominate selection.';
+
+  const drvContainer = document.getElementById('driverWeights');
+  const drvLabels = [
+    { key: 'overtaking', label: 'Overtaking' },
+    { key: 'defending', label: 'Defending' },
+    { key: 'qualifying', label: 'Qualifying' },
+    { key: 'raceStart', label: 'Race Start' },
+    { key: 'tyre', label: 'Tyre Mgmt' }
+  ];
+  drvContainer.innerHTML = drvLabels.map(w => `
+    <div class="weight-row">
+      <label>${w.label}</label>
+      <input type="range" min="1" max="10" value="${state.driverWeights[w.key]}"
+        id="dw-${w.key}" oninput="onDrvWeight('${w.key}', this.value)">
+      <span class="weight-val" id="dwv-${w.key}">${state.driverWeights[w.key]}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('driverWeightNote').innerHTML =
+    '💡 Rate how important each driver skill is for your race strategy. Uses weight² so high values strongly dominate selection.';
+}
+
+// ============================================================
+// EVENT HANDLERS
+// ============================================================
+function toggleGroup(id) {
+  const body = document.getElementById(`body-${id}`);
+  const chev = document.getElementById(`chev-${id}`);
+  const isOpen = body.classList.contains('open');
+  if (isOpen) { body.classList.remove('open'); chev.classList.remove('open'); }
+  else { body.classList.add('open'); chev.classList.add('open'); }
+}
+
+function onInventoryChange(name, val, maxLvl) {
+  const allMeta = Object.values(COMP_META).flat();
+  const meta = allMeta.find(m => m.name === name);
+  if (meta && meta.rarity === 'Starter') return;
+
+  let v = parseInt(val) || 0;
+  if (v < 0) v = 0;
+  if (v > maxLvl) v = maxLvl;
+  state.inventory[name] = v;
+
+  const safeId = name.replace(/[\s.]/g,'_');
+  const input = document.getElementById(`inv-${safeId}`);
+  if (input) { input.value = v; input.classList.toggle('owned', v > 0); }
+
+  COMP_TYPES.forEach(type => {
+    const meta = COMP_META[type] || [];
+    if (meta.find(m => m.name === name)) {
+      const ownedCount = meta.filter(m => (state.inventory[m.name] || 0) > 0).length;
+      const bodyEl = document.getElementById(`body-comp-${type}`);
+      if (bodyEl) {
+        const countEl = bodyEl.previousElementSibling.querySelector('.owned-count');
+        if (countEl) countEl.textContent = `${ownedCount}/${meta.length} owned`;
+      }
+    }
+  });
+
+  saveState();
+  recalculate();
+}
+
+function onDriverInventoryChange(key, val, maxLvl) {
+  let v = parseInt(val) || 0;
+  if (v < 0) v = 0;
+  if (v > maxLvl) v = maxLvl;
+  state.driverInventory[key] = v;
+
+  const safeKey = key.replace(/[\s.]/g,'_');
+  const input = document.getElementById(`dinv-${safeKey}`);
+  if (input) { input.value = v; input.classList.toggle('owned', v > 0); }
+
+  RARITY_ORDER.forEach(rarity => {
+    const meta = DRIVER_META[rarity] || [];
+    if (meta.find(m => m.key === key)) {
+      const ownedCount = meta.filter(m => (state.driverInventory[m.key] || 0) > 0).length;
+      const bodyEl = document.getElementById(`body-drv-${rarity}`);
+      if (bodyEl) {
+        const countEl = bodyEl.previousElementSibling.querySelector('.owned-count');
+        if (countEl) countEl.textContent = `${ownedCount}/${meta.length} owned`;
+      }
+    }
+  });
+
+  saveState();
+  recalculate();
+}
+
+function onCompWeight(key, val) {
+  state.compWeights[key] = parseInt(val);
+  document.getElementById(`cwv-${key}`).textContent = val;
+  saveState();
+  recalculate();
+}
+
+function onDrvWeight(key, val) {
+  state.driverWeights[key] = parseInt(val);
+  document.getElementById(`dwv-${key}`).textContent = val;
+  saveState();
+  recalculate();
+}
+
+function onBoostPctChange(val) {
+  state.boostPct = parseInt(val) || 0;
+  saveState();
+  recalculate();
+}
+
+function onBoostToggle(kind, key, checked) {
+  if (kind === 'comp') {
+    state.boostedComponents[key] = checked;
+  } else {
+    state.boostedDrivers[key] = checked;
+  }
+  saveState();
+  recalculate();
+}
+
+function onBoostChange(val) {
+  state.selectedBoost = val;
+  saveState();
+  renderBoostStats();
+  recalculate();
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const current = body.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  body.setAttribute('data-theme', next);
+  document.getElementById('themeToggle').textContent = next === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('f1clash_theme', next);
+}
+</script>
+
+<script>
+// ============================================================
+// BOOST STATS RENDERING
+// ============================================================
+function renderBoostStats() {
+  const el = document.getElementById('boostStats');
+  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
+  if (!boost) { el.innerHTML = ''; return; }
+  const stats = [];
+  if (boost.overtaking) stats.push(`<span class="stat-chip spd">OV +${boost.overtaking}</span>`);
+  if (boost.defending) stats.push(`<span class="stat-chip crn">DEF +${boost.defending}</span>`);
+  if (boost.raceStart) stats.push(`<span class="stat-chip pow">RS +${boost.raceStart}</span>`);
+  if (boost.tyre) stats.push(`<span class="stat-chip qua">TYR +${boost.tyre}</span>`);
+  if (boost.speed) stats.push(`<span class="stat-chip spd">SPD +${boost.speed}</span>`);
+  if (boost.cornering) stats.push(`<span class="stat-chip crn">CRN +${boost.cornering}</span>`);
+  if (boost.powerUnit) stats.push(`<span class="stat-chip pow">PU +${boost.powerUnit}</span>`);
+  if (boost.pitTime) stats.push(`<span class="stat-chip pit">PIT -${boost.pitTime}</span>`);
+  el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:3px">${stats.join('')}</div>
+    <div style="font-size:10px;color:var(--text2);margin-top:4px">Total: ${boost.total}</div>`;
+}
+
+function populateBoostSelect() {
+  const sel = document.getElementById('boostSelect');
+  sel.innerHTML = '<option value="">— No Boost —</option>';
+  BOOSTS.forEach(b => {
+    const opt = document.createElement('option');
+    opt.value = b.name;
+    opt.textContent = `${b.name} (${b.total})`;
+    if (state.selectedBoost === b.name) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+// ============================================================
+// RESULTS RENDERING
+// ============================================================
+function renderRow(type, comp) {
+  if (!comp) return `<tr><td>${type.replace(/([A-Z])/g,' $1').trim()}</td><td colspan="9" style="color:var(--text2)">No owned component</td></tr>`;
+  const boostIcon = comp._boosted ? ' 🚀' : '';
+  const total = comp.s + comp.c + comp.p + comp.q + comp.om;
+  const omDisplay = comp.y === 'Battery' ? comp.om : '—';
+  return `<tr>
+    <td>${type.replace(/([A-Z])/g,' $1').trim()}</td>
+    <td><span class="comp-name">${comp.n}${boostIcon}</span> <span class="slot-rarity rarity-${comp.r}" style="font-size:9px;vertical-align:middle">${comp.r}</span></td>
+    <td class="comp-level">${comp.l}</td>
+    <td class="num" style="color:#60a5fa">${comp.s}</td>
+    <td class="num" style="color:#fbbf24">${comp.c}</td>
+    <td class="num" style="color:#34d399">${comp.p}</td>
+    <td class="num" style="color:#a78bfa">${comp.q}</td>
+    <td class="num" style="color:#E10600">${comp.t}s</td>
+    <td class="num" style="color:#00B0F0">${omDisplay}</td>
+    <td class="num" style="font-weight:700">${total}</td>
+  </tr>`;
+}
+
+function renderTotals(comps, containerId) {
+  const vals = Object.values(comps).filter(Boolean);
+  const sums = { s: 0, c: 0, p: 0, q: 0, t: 0, om: 0 };
+  vals.forEach(c => { sums.s += c.s; sums.c += c.c; sums.p += c.p; sums.q += c.q; sums.t += c.t; sums.om += c.om; });
+  const total = sums.s + sums.c + sums.p + sums.q + sums.om;
+  document.getElementById(containerId).innerHTML = `
+    <div class="kpi speed"><div class="val">${sums.s}</div><div class="lbl">Speed</div></div>
+    <div class="kpi corn"><div class="val">${sums.c}</div><div class="lbl">Cornering</div></div>
+    <div class="kpi pu"><div class="val">${sums.p}</div><div class="lbl">Power Unit</div></div>
+    <div class="kpi qual"><div class="val">${sums.q}</div><div class="lbl">Qualifying</div></div>
+    <div class="kpi pit"><div class="val">${sums.t.toFixed(2)}</div><div class="lbl">Pit Time</div></div>
+    <div class="kpi" style="--stat-color:#00B0F0"><div class="val" style="color:#00B0F0">${sums.om}</div><div class="lbl">OT Mode</div></div>
+    <div class="kpi total"><div class="val">${total}</div><div class="lbl">Total</div></div>
+  `;
+  return sums;
+}
+
+function renderDriverResults() {
+  const el = document.getElementById('driverResults');
+  const topDrivers = getTopDrivers(2);
+  const d1 = topDrivers[0] || null;
+  const d2 = topDrivers[1] || null;
+
+  if (!d1 && !d2) {
+    el.innerHTML = '<span style="color:var(--text2);font-size:12px;padding:8px">Add drivers in the left panel to see weighted recommendations.</span>';
+    return;
+  }
+
+  const rows = [];
+  [d1, d2].forEach((d, i) => {
+    if (!d) return;
+    const total = d.ov + d.def + d.qual + d.rs + d.tyre;
+    const ws = driverWeightedScore(d);
+    const boostIcon = d._boosted ? ' 🚀' : '';
+    rows.push(`<tr>
+      <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
+      <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
+      <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
+    </tr>`);
+  });
+
+  if (d1 && d2) {
+    const cOv = d1.ov + d2.ov, cDef = d1.def + d2.def, cQual = d1.qual + d2.qual;
+    const cRs = d1.rs + d2.rs, cTyre = d1.tyre + d2.tyre;
+    const cTotal = cOv + cDef + cQual + cRs + cTyre;
+    const cWs = driverWeightedScore(d1) + driverWeightedScore(d2);
+    rows.push(`<tr style="border-top:2px solid var(--border)">
+      <td style="font-weight:700">Combined</td>
+      <td class="num">${cOv}</td><td class="num">${cDef}</td><td class="num">${cQual}</td><td class="num">${cRs}</td><td class="num">${cTyre}</td>
+      <td class="num" style="font-weight:700">${cTotal}</td><td class="num" style="color:var(--blue);font-weight:700">${cWs.toFixed(1)}</td>
+    </tr>`);
+  }
+
+  el.innerHTML = `
+    <table class="rec-table">
+      <thead><tr><th>Driver</th><th class="num">OV</th><th class="num">DEF</th><th class="num">QUA</th><th class="num">RS</th><th class="num">TYR</th><th class="num">Total</th><th class="num">W.Score</th></tr></thead>
+      <tbody>${rows.join('')}</tbody>
+    </table>
+  `;
+}
+
+// ============================================================
+// UPGRADE ADVISOR
+// ============================================================
+function renderUpgradeAdvisor() {
+  const container = document.getElementById('upgradeAdvisorBody');
+  const suggestions = [];
+  const currentBest = findBestOwnedWeighted();
+
+  COMP_TYPES.forEach(type => {
+    const meta = COMP_META[type] || [];
+    meta.forEach(m => {
+      const currentLvl = state.inventory[m.name] || 0;
+      if (currentLvl <= 0 || currentLvl >= m.maxLevel) return;
+      const nextLvl = currentLvl + 1;
+      const currentComp = getEffectiveComp(m.name, currentLvl);
+      const nextCompBase = getComp(m.name, nextLvl);
+      if (!currentComp || !nextCompBase) return;
+
+      let effectiveNext = nextCompBase;
+      if (state.boostedComponents[m.name]) {
+        const mult = 1 + state.boostPct / 100;
+        effectiveNext = {
+          ...nextCompBase,
+          s: Math.ceil(nextCompBase.s * mult),
+          c: Math.ceil(nextCompBase.c * mult),
+          p: Math.ceil(nextCompBase.p * mult),
+          q: Math.ceil(nextCompBase.q * mult),
+          om: Math.ceil(nextCompBase.om * mult),
+          t: Math.round(nextCompBase.t * (1 - state.boostPct / 100) * 100) / 100
+        };
+      }
+
+      const currentScore = weightedScore(currentComp);
+      const nextScore = weightedScore(effectiveNext);
+      const currentBestForSlot = currentBest[type];
+      let impact = '';
+      if (currentBestForSlot && currentBestForSlot.n === m.name) {
+        impact = 'Improves current pick';
+      } else if (currentBestForSlot && nextScore > weightedScore(currentBestForSlot)) {
+        impact = `Would replace ${currentBestForSlot.n}`;
+      } else {
+        return;
+      }
+
+      suggestions.push({
+        kind: 'component', type, name: m.name, rarity: m.rarity,
+        currentLvl, nextLvl,
+        currentTotal: unweightedTotal(currentComp),
+        nextTotal: unweightedTotal(effectiveNext),
+        gain: unweightedTotal(effectiveNext) - unweightedTotal(currentComp),
+        impact
+      });
+    });
+  });
+
+  const currentTopDrivers = getTopDrivers(2);
+  Object.values(DRIVER_META).flat().forEach(m => {
+    const currentLvl = state.driverInventory[m.key] || 0;
+    if (currentLvl <= 0 || currentLvl >= m.maxLevel) return;
+    const nextLvl = currentLvl + 1;
+    const currentDrv = getEffectiveDriver(m.name, m.rarity, currentLvl);
+    const nextDrvBase = getDriver(m.name, m.rarity, nextLvl);
+    if (!currentDrv || !nextDrvBase) return;
+
+    let effectiveNext = nextDrvBase;
+    if (state.boostedDrivers[m.key]) {
+      const mult = 1 + state.boostPct / 100;
+      effectiveNext = {
+        ...nextDrvBase,
+        ov: Math.ceil(nextDrvBase.ov * mult),
+        def: Math.ceil(nextDrvBase.def * mult),
+        qual: Math.ceil(nextDrvBase.qual * mult),
+        rs: Math.ceil(nextDrvBase.rs * mult),
+        tyre: Math.ceil(nextDrvBase.tyre * mult)
+      };
+    }
+
+    const currentWS = driverWeightedScore(currentDrv);
+    const nextWS = driverWeightedScore(effectiveNext);
+    const isInTop2 = currentTopDrivers.some(d => d.key === m.key);
+    const wouldEnterTop2 = !isInTop2 && currentTopDrivers.length >= 2 && nextWS > driverWeightedScore(currentTopDrivers[1]);
+    if (!isInTop2 && !wouldEnterTop2) return;
+
+    const impact = isInTop2 ? 'Improves current pick' : `Would replace ${currentTopDrivers[1].name}`;
+    const currentTotal = currentDrv.ov + currentDrv.def + currentDrv.qual + currentDrv.rs + currentDrv.tyre;
+    const nextTotal = effectiveNext.ov + effectiveNext.def + effectiveNext.qual + effectiveNext.rs + effectiveNext.tyre;
+
+    suggestions.push({
+      kind: 'driver', type: 'Driver', name: m.name, rarity: m.rarity,
+      currentLvl, nextLvl, currentTotal, nextTotal,
+      gain: nextTotal - currentTotal, impact
+    });
+  });
+
+  suggestions.sort((a, b) => b.gain - a.gain);
+
+  if (suggestions.length === 0) {
+    container.innerHTML = '<div style="color:var(--text2);font-size:12px;padding:8px">No upgrade suggestions available. Add components/drivers to your inventory first.</div>';
+    return;
+  }
+
+  let html = `<table class="rec-table">
+    <thead><tr><th>Type</th><th>Name</th><th class="num">Lv</th><th class="num">\u2192</th><th class="num">Current</th><th class="num">After</th><th class="num">+Gain</th><th>Impact</th></tr></thead>
+    <tbody>`;
+
+  suggestions.slice(0, 10).forEach(s => {
+    const typeDisplay = s.type.replace(/([A-Z])/g, ' $1').trim();
+    const boostIcon = (s.kind === 'component' ? state.boostedComponents[s.name] : state.boostedDrivers[s.name + '_' + s.rarity]) ? ' 🚀' : '';
+    html += `<tr>
+      <td>${typeDisplay}</td>
+      <td><span class="comp-name">${s.name}${boostIcon}</span> <span class="slot-rarity rarity-${s.rarity}" style="font-size:9px;vertical-align:middle">${s.rarity}</span></td>
+      <td class="num">${s.currentLvl}</td>
+      <td class="num" style="color:var(--green)">\u2192 ${s.nextLvl}</td>
+      <td class="num">${s.currentTotal}</td>
+      <td class="num" style="color:var(--green)">${s.nextTotal}</td>
+      <td class="num" style="color:var(--green);font-weight:700">+${s.gain}</td>
+      <td style="font-size:11px;color:${s.impact.startsWith('Would') ? '#FFD966' : 'var(--green)'}">${s.impact}</td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+</script>
+
+<script>
+// ============================================================
+// AI COMPARE
+// ============================================================
+function populateAISeriesSelect() {
+  const sel = document.getElementById('aiSeriesSelect');
+  sel.innerHTML = '<option value="">— Select —</option>';
+  const keys = Object.keys(AI_COMPARE).filter(k => k.startsWith('Series')).sort((a, b) => {
+    const numA = parseInt(a.replace(/\D/g, '')) || 0;
+    const numB = parseInt(b.replace(/\D/g, '')) || 0;
+    return numA - numB;
+  });
+  keys.forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k;
+    opt.textContent = k;
+    if (state.aiSeries === k) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function renderAICompare() {
+  const series = document.getElementById('aiSeriesSelect').value;
+  state.aiSeries = series;
+  saveState();
+  const container = document.getElementById('aiCompareBody');
+
+  if (!series || !AI_COMPARE[series]) {
+    container.innerHTML = '<div style="color:var(--text2);font-size:12px;padding:8px">Select a series to compare against AI bots.</div>';
+    return;
+  }
+
+  renderCompareTable(AI_COMPARE[series], container, 'ai');
+}
+
+// ============================================================
+// GP CATEGORY & SUGGESTED SETUP (Change 6)
+// ============================================================
+function onGPCategoryChange(category) {
+  state.gpCategory = category;
+  saveState();
+  renderGPSuggestedSetup();
+  filterGPLocations(category);
+}
+
+function filterGPLocations(category) {
+  const sel = document.getElementById('gpSeriesSelect');
+  sel.innerHTML = '<option value="">— Select Location —</option>';
+  if (!category) return;
+  const keys = Object.keys(GP_COMPARE).filter(k => k.startsWith(category)).sort();
+  keys.forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k;
+    opt.textContent = k.replace(category + ' ', '');
+    if (state.gpSeries === k) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function getGPWeights() {
+  const location = state.gpSeries;
+  const category = state.gpCategory;
+
+  if (!location || !category) return null;
+
+  // Extract track name by removing category prefix
+  const trackName = location.replace(category + ' ', '').trim();
+  const trackInfo = TRACK_STATS[trackName];
+
+  if (!trackInfo) return null;
+
+  // Build weights: 10 for focus stats, 1 for everything else
+  const compWeights = { speed: 1, cornering: 1, pu: 1, qualifying: 1, pit: 1, overtakeMode: 1 };
+  const driverWeights = { overtaking: 1, defending: 1, qualifying: 1, raceStart: 1, tyre: 1 };
+
+  // Map stat names to weight keys
+  const statToCompWeight = {
+    'speed': 'speed',
+    'cornering': 'cornering',
+    'powerUnit': 'pu',
+    'qualifying': 'qualifying'
+  };
+  const statToDriverWeight = {
+    'overtaking': 'overtaking',
+    'defending': 'defending',
+    'qualifying': 'qualifying',
+    'raceStart': 'raceStart',
+    'tyre': 'tyre'
+  };
+
+  [trackInfo.stat1, trackInfo.stat2].forEach(stat => {
+    if (statToCompWeight[stat]) compWeights[statToCompWeight[stat]] = 10;
+    if (statToDriverWeight[stat]) driverWeights[statToDriverWeight[stat]] = 10;
+  });
+
+  return { compWeights, driverWeights };
+}
+
+function renderGPSuggestedSetup() {
+  const category = state.gpCategory;
+  const setupDiv = document.getElementById('gpSuggestedSetup');
+
+  if (!category) {
+    setupDiv.style.display = 'none';
+    return;
+  }
+
+  setupDiv.style.display = 'block';
+  const maxSeries = GP_CATEGORY_MAX_SERIES[category] || 12;
+
+  // Get track-specific weights (or fall back to global weights)
+  const gpWeights = getGPWeights();
+  const useCompWeights = gpWeights ? gpWeights.compWeights : state.compWeights;
+  const useDriverWeights = gpWeights ? gpWeights.driverWeights : state.driverWeights;
+
+  // Show track focus note
+  const location = state.gpSeries;
+  const trackName = location ? location.replace(category + ' ', '').trim() : '';
+  const trackInfo = trackName ? TRACK_STATS[trackName] : null;
+
+  let noteText = `Best setup from your owned inventory restricted to Series ${maxSeries} or lower.`;
+  if (trackInfo) {
+    const statLabels = {
+      'speed': 'Speed', 'cornering': 'Cornering', 'powerUnit': 'Power Unit',
+      'qualifying': 'Qualifying', 'overtaking': 'Overtaking', 'defending': 'Defending',
+      'raceStart': 'Race Start', 'tyre': 'Tyre Management'
+    };
+    noteText += ` Track focus: ${statLabels[trackInfo.stat1] || trackInfo.stat1} + ${statLabels[trackInfo.stat2] || trackInfo.stat2}`;
+  }
+  document.getElementById('gpSetupNote').textContent = noteText;
+
+  // Update track focus visual indicator
+  const focusEl = document.getElementById('gpTrackFocus');
+  if (focusEl) {
+    if (trackInfo) {
+      const statLabels = {
+        'speed': 'Speed', 'cornering': 'Cornering', 'powerUnit': 'Power Unit',
+        'qualifying': 'Qualifying', 'overtaking': 'Overtaking', 'defending': 'Defending',
+        'raceStart': 'Race Start', 'tyre': 'Tyre Management'
+      };
+      focusEl.innerHTML = `<span style="color:var(--green);font-weight:600">🎯 Track Focus:</span> 
+        <span class="stat-chip spd">${statLabels[trackInfo.stat1] || trackInfo.stat1}</span> 
+        <span class="stat-chip crn">${statLabels[trackInfo.stat2] || trackInfo.stat2}</span>`;
+    } else {
+      focusEl.innerHTML = '';
+    }
+  }
+
+  // Use a local weightedScore function with GP-specific weights
+  function gpWeightedScore(c) {
+    const w = useCompWeights;
+    const baseScore = (c.s * w.speed * w.speed) + (c.c * w.cornering * w.cornering) + 
+                      (c.p * w.pu * w.pu) + (c.q * w.qualifying * w.qualifying) +
+                      (c.om * w.overtakeMode * w.overtakeMode);
+    const pitScore = c.t > 0 ? (1 / c.t) * w.pit * w.pit * 50 : 0;
+    return baseScore + pitScore;
+  }
+
+  function gpDriverWeightedScore(d) {
+    const w = useDriverWeights;
+    return (d.ov * w.overtaking * w.overtaking) + (d.def * w.defending * w.defending) + 
+           (d.qual * w.qualifying * w.qualifying) + (d.rs * w.raceStart * w.raceStart) + 
+           (d.tyre * w.tyre * w.tyre);
+  }
+
+  // Filter owned components to only those with series <= maxSeries
+  const gpBestWeighted = {};
+  COMP_TYPES.forEach(type => {
+    const meta = COMP_META[type] || [];
+    const eligible = [];
+    meta.forEach(m => {
+      if (m.series > maxSeries) return;
+      const lvl = state.inventory[m.name] || 0;
+      if (lvl > 0) {
+        const comp = getEffectiveComp(m.name, lvl);
+        if (comp) eligible.push(comp);
+      }
+    });
+    // Fallback to starter if nothing eligible
+    if (eligible.length === 0) {
+      const starter = meta.find(m => m.rarity === 'Starter');
+      if (starter) {
+        const comp = getComp(starter.name, 1);
+        if (comp) eligible.push(comp);
+      }
+    }
+    // Find best by GP weighted score
+    let best = null, bestScore = -Infinity;
+    eligible.forEach(c => {
+      const score = gpWeightedScore(c);
+      if (score > bestScore) { bestScore = score; best = c; }
+    });
+    gpBestWeighted[type] = best;
+  });
+
+  // Render component table
+  document.getElementById('gpSetupBody').innerHTML =
+    COMP_TYPES.map(t => renderRow(t, gpBestWeighted[t])).join('');
+  renderTotals(gpBestWeighted, 'gpSetupTotals');
+
+  // Find best drivers restricted by series using GP driver weights
+  const gpDrivers = [];
+  Object.values(DRIVER_META).flat().forEach(m => {
+    if (m.series > maxSeries) return;
+    const lvl = state.driverInventory[m.key] || 0;
+    if (lvl > 0) {
+      const d = getEffectiveDriver(m.name, m.rarity, lvl);
+      if (d) gpDrivers.push({ ...d, key: m.key });
+    }
+  });
+  gpDrivers.sort((a, b) => gpDriverWeightedScore(b) - gpDriverWeightedScore(a));
+  // Deduplicate by driver name — can't use same driver twice
+  const topGPDrivers = [];
+  const usedGPNames = new Set();
+  for (const d of gpDrivers) {
+    if (!usedGPNames.has(d.name)) {
+      usedGPNames.add(d.name);
+      topGPDrivers.push(d);
+      if (topGPDrivers.length >= 2) break;
+    }
+  }
+
+  // Render driver results
+  const drvEl = document.getElementById('gpDriverResults');
+  if (topGPDrivers.length === 0) {
+    drvEl.innerHTML = '<span style="color:var(--text2);font-size:12px">No eligible drivers owned for this category.</span>';
+  } else {
+    const rows = topGPDrivers.map(d => {
+      const total = d.ov + d.def + d.qual + d.rs + d.tyre;
+      const ws = gpDriverWeightedScore(d);
+      const boostIcon = d._boosted ? ' 🚀' : '';
+      return `<tr>
+        <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
+        <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
+        <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
+      </tr>`;
+    });
+    drvEl.innerHTML = `
+      <table class="rec-table">
+        <thead><tr><th>Driver</th><th class="num">OV</th><th class="num">DEF</th><th class="num">QUA</th><th class="num">RS</th><th class="num">TYR</th><th class="num">Total</th><th class="num">W.Score</th></tr></thead>
+        <tbody>${rows.join('')}</tbody>
+      </table>
+    `;
+  }
+}
+
+// ============================================================
+// GP COMPARE
+// ============================================================
+function populateGPSeriesSelect() {
+  // Initial population — will be filtered by category if set
+  if (state.gpCategory) {
+    filterGPLocations(state.gpCategory);
+  } else {
+    const sel = document.getElementById('gpSeriesSelect');
+    sel.innerHTML = '<option value="">— Select Location —</option>';
+    const keys = Object.keys(GP_COMPARE).sort();
+    keys.forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k;
+      opt.textContent = k;
+      if (state.gpSeries === k) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+}
+
+function onGPLocationChange() {
+  state.gpSeries = document.getElementById('gpSeriesSelect').value;
+  saveState();
+  renderGPSuggestedSetup();
+  renderGPCompare();
+}
+
+function renderGPCompare() {
+  const series = document.getElementById('gpSeriesSelect').value;
+  state.gpSeries = series;
+  saveState();
+  const container = document.getElementById('gpCompareBody');
+
+  // Update track focus indicator
+  const category = state.gpCategory;
+  const trackName = (series && category) ? series.replace(category + ' ', '').trim() : '';
+  const trackInfo = trackName ? TRACK_STATS[trackName] : null;
+  const focusEl = document.getElementById('gpTrackFocus');
+  if (focusEl) {
+    if (trackInfo) {
+      const statLabels = {
+        'speed': 'Speed', 'cornering': 'Cornering', 'powerUnit': 'Power Unit',
+        'qualifying': 'Qualifying', 'overtaking': 'Overtaking', 'defending': 'Defending',
+        'raceStart': 'Race Start', 'tyre': 'Tyre Management'
+      };
+      focusEl.innerHTML = `<span style="color:var(--green);font-weight:600">🎯 Track Focus:</span> 
+        <span class="stat-chip spd">${statLabels[trackInfo.stat1] || trackInfo.stat1}</span> 
+        <span class="stat-chip crn">${statLabels[trackInfo.stat2] || trackInfo.stat2}</span>`;
+    } else {
+      focusEl.innerHTML = '';
+    }
+  }
+
+  if (!series || !GP_COMPARE[series]) {
+    container.innerHTML = '<div style="color:var(--text2);font-size:12px;padding:8px">Select a location to compare against GP AI bots.</div>';
+    return;
+  }
+
+  renderCompareTable(GP_COMPARE[series], container, 'gp');
+}
+
+// ============================================================
+// SHARED COMPARE TABLE RENDERER
+// ============================================================
+function renderCompareTable(bots, container, prefix) {
+  const cols = ['overtaking','defending','qualifying','raceStart','tyreMgmt','speed','cornering','powerUnit','qualifyingCar','pitTime','qualiTotal','teamScore'];
+  const colLabels = ['OV','DEF','QUAL','RS','TYRE','Spd','Crn','PU','QUAL','Pit','Quali Tot','Team Score'];
+  const driverCols = [0,1,2,3,4];
+  const carCols = [5,6,7,8,9];
+
+  // Determine setup source based on prefix and GP category
+  let bestOwnedW;
+  let topDrivers;
+  if (prefix === 'gp' && state.gpCategory) {
+    const maxSeries = GP_CATEGORY_MAX_SERIES[state.gpCategory] || 12;
+    const gpWeights = getGPWeights();
+    const useCompWeights = gpWeights ? gpWeights.compWeights : state.compWeights;
+    const useDriverWeights = gpWeights ? gpWeights.driverWeights : state.driverWeights;
+
+    function localWeightedScore(c) {
+      const w = useCompWeights;
+      const baseScore = (c.s * w.speed * w.speed) + (c.c * w.cornering * w.cornering) + 
+                        (c.p * w.pu * w.pu) + (c.q * w.qualifying * w.qualifying) +
+                        (c.om * w.overtakeMode * w.overtakeMode);
+      const pitScore = c.t > 0 ? (1 / c.t) * w.pit * w.pit * 50 : 0;
+      return baseScore + pitScore;
+    }
+
+    function localDriverWeightedScore(d) {
+      const w = useDriverWeights;
+      return (d.ov * w.overtaking * w.overtaking) + (d.def * w.defending * w.defending) + 
+             (d.qual * w.qualifying * w.qualifying) + (d.rs * w.raceStart * w.raceStart) + 
+             (d.tyre * w.tyre * w.tyre);
+    }
+
+    // Use GP-restricted components
+    bestOwnedW = {};
+    COMP_TYPES.forEach(type => {
+      const meta = COMP_META[type] || [];
+      const eligible = [];
+      meta.forEach(m => {
+        if (m.series > maxSeries) return;
+        const lvl = state.inventory[m.name] || 0;
+        if (lvl > 0) {
+          const comp = getEffectiveComp(m.name, lvl);
+          if (comp) eligible.push(comp);
+        }
+      });
+      if (eligible.length === 0) {
+        const starter = meta.find(m => m.rarity === 'Starter');
+        if (starter) {
+          const comp = getComp(starter.name, 1);
+          if (comp) eligible.push(comp);
+        }
+      }
+      let best = null, bestScore = -Infinity;
+      eligible.forEach(c => {
+        const score = localWeightedScore(c);
+        if (score > bestScore) { bestScore = score; best = c; }
+      });
+      bestOwnedW[type] = best;
+    });
+    // Use GP-restricted drivers
+    const gpDrivers = [];
+    Object.values(DRIVER_META).flat().forEach(m => {
+      if (m.series > maxSeries) return;
+      const lvl = state.driverInventory[m.key] || 0;
+      if (lvl > 0) {
+        const d = getEffectiveDriver(m.name, m.rarity, lvl);
+        if (d) gpDrivers.push({ ...d, key: m.key });
+      }
+    });
+    gpDrivers.sort((a, b) => localDriverWeightedScore(b) - localDriverWeightedScore(a));
+    // Deduplicate by driver name — can't use same driver twice
+    topDrivers = [];
+    const usedLocalNames = new Set();
+    for (const d of gpDrivers) {
+      if (!usedLocalNames.has(d.name)) {
+        usedLocalNames.add(d.name);
+        topDrivers.push(d);
+        if (topDrivers.length >= 2) break;
+      }
+    }
+  } else {
+    bestOwnedW = findBestOwnedWeighted();
+    topDrivers = getTopDrivers(2);
+  }
+
+  const mySums = { s: 0, c: 0, p: 0, q: 0, t: 0, om: 0 };
+  Object.values(bestOwnedW).filter(Boolean).forEach(c => { mySums.s += c.s; mySums.c += c.c; mySums.p += c.p; mySums.q += c.q; mySums.t += c.t; mySums.om += c.om; });
+
+  // Apply race boost to car stats
+  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
+  if (boost) {
+    mySums.s += boost.speed;
+    mySums.c += boost.cornering;
+    mySums.p += boost.powerUnit;
+    mySums.t = Math.max(0, mySums.t - boost.pitTime);
+  }
+
+  const d1 = topDrivers[0] || null;
+  const d2 = topDrivers[1] || null;
+
+  const myRows = [];
+  [d1, d2].forEach((d, i) => {
+    if (!d) return;
+    let dOv = d.ov, dDef = d.def, dQual = d.qual, dRs = d.rs, dTyre = d.tyre;
+    if (boost) {
+      dOv += boost.overtaking;
+      dDef += boost.defending;
+      dRs += boost.raceStart;
+      dTyre += boost.tyre;
+    }
+    const driverLabel = `⭐ ${d.name} ${d.rarity} Lv${d.level}`;
+    const qualiTotal = dQual + mySums.q;
+    const teamScore = dOv + dDef + dQual + dRs + dTyre + mySums.s + mySums.c + mySums.p + mySums.q;
+    myRows.push({
+      driver: driverLabel,
+      overtaking: dOv, defending: dDef, qualifying: dQual, raceStart: dRs, tyreMgmt: dTyre,
+      speed: mySums.s, cornering: mySums.c, powerUnit: mySums.p, qualifyingCar: mySums.q,
+      pitTime: mySums.t, qualiTotal: qualiTotal, teamScore: teamScore,
+      _isMine: true
+    });
+  });
+
+  const allRows = [...bots.map(b => ({ ...b, _isMine: false })), ...myRows];
+  allRows.sort((a, b) => b.teamScore - a.teamScore);
+
+  const botMedians = {};
+  cols.forEach(col => {
+    const botVals = bots.map(b => b[col]).sort((a, b) => a - b);
+    botMedians[col] = botVals[Math.floor(botVals.length / 2)] || 0;
+  });
+
+  const bestMyRow = myRows.length > 0 ? myRows.reduce((a, b) => a.teamScore >= b.teamScore ? a : b) : null;
+  const ranks = {};
+  if (bestMyRow) {
+    cols.forEach(col => {
+      const allVals = bots.map(b => b[col]).concat([bestMyRow[col]]);
+      if (col === 'pitTime') {
+        allVals.sort((a, b) => a - b);
+      } else {
+        allVals.sort((a, b) => b - a);
+      }
+      ranks[col] = allVals.indexOf(bestMyRow[col]) + 1;
+    });
+  }
+
+  let html = '<table class="ai-compare-table">';
+  html += '<thead>';
+  html += '<tr>';
+  html += '<th style="text-align:center"></th>';
+  html += '<th></th>';
+  cols.forEach((col, i) => {
+    if (i === driverCols[0]) {
+      html += `<th colspan="${driverCols.length}" class="driver-header" style="text-align:center;border-bottom:3px solid #3b82f6;font-size:8px;letter-spacing:1px;padding:3px 6px">DRIVER</th>`;
+    } else if (i === carCols[0]) {
+      html += `<th colspan="${carCols.length}" class="car-header" style="text-align:center;border-bottom:3px solid #8b5cf6;font-size:8px;letter-spacing:1px;padding:3px 6px">CAR</th>`;
+    } else if (i > driverCols[0] && i <= driverCols[driverCols.length-1]) {
+    } else if (i > carCols[0] && i <= carCols[carCols.length-1]) {
+    } else {
+      html += '<th></th>';
+    }
+  });
+  html += '</tr>';
+
+  html += '<tr>';
+  html += '<th style="text-align:center">POS</th>';
+  html += '<th style="text-align:left">Driver</th>';
+  cols.forEach((col, i) => {
+    let cls = '';
+    if (driverCols.includes(i)) cls = ' class="driver-stat-header"';
+    else if (carCols.includes(i)) cls = ' class="car-stat-header"';
+    html += `<th${cls} style="text-align:center">${colLabels[i]}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  allRows.forEach((row, idx) => {
+    const pos = idx + 1;
+    const isMine = row._isMine;
+    const rowStyle = isMine ? ' style="border-top:2px dashed var(--accent);border-bottom:2px dashed var(--accent);background:var(--card3)"' : '';
+    const tdStyle = isMine ? ' style="font-weight:700;color:white"' : '';
+
+    html += `<tr${rowStyle}>`;
+    html += `<td style="text-align:center;font-weight:700;font-size:13px${isMine ? ';color:var(--accent)' : ''}">P${pos}</td>`;
+    html += `<td style="text-align:left;font-weight:600;color:white">${row.driver}</td>`;
+
+    cols.forEach((col, i) => {
+      const val = row[col];
+      const displayVal = col === 'pitTime' ? (val != null ? val.toFixed(2) + 's' : '—') : (val != null ? val : '—');
+      let cls = '';
+      if (isMine) {
+        const median = botMedians[col];
+        if (col === 'pitTime') {
+          cls = val < median ? 'cell-above' : (val > median ? 'cell-below' : '');
+        } else {
+          cls = val > median ? 'cell-above' : (val < median ? 'cell-below' : '');
+        }
+      }
+      let bgStyle = '';
+      if (driverCols.includes(i) && !isMine) bgStyle = 'background:rgba(42,58,90,0.3);';
+      else if (carCols.includes(i) && !isMine) bgStyle = 'background:rgba(58,42,74,0.3);';
+      html += `<td class="${cls}" style="text-align:center;${bgStyle}"${tdStyle}>${displayVal}</td>`;
+    });
+    html += '</tr>';
+  });
+
+  if (bestMyRow) {
+    html += '<tr class="rank-row">';
+    html += '<td style="text-align:center"></td>';
+    html += '<td style="text-align:left">Your Rank</td>';
+    cols.forEach(col => {
+      const total = bots.length + 1;
+      html += `<td style="text-align:center">#${ranks[col]}/${total}</td>`;
+    });
+    html += '</tr>';
+  }
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ============================================================
+// MAIN RECALCULATE
+// ============================================================
+function recalculate() {
+  // My Best Setup (Weighted)
+  const bestOwnedW = findBestOwnedWeighted();
+  document.getElementById('customBody').innerHTML =
+    COMP_TYPES.map(t => renderRow(t, bestOwnedW[t])).join('');
+  const wSums = renderTotals(bestOwnedW, 'customTotals');
+
+  // Apply race boost to KPI bar
+  let kpiS = wSums.s, kpiC = wSums.c, kpiP = wSums.p, kpiQ = wSums.q, kpiT = wSums.t, kpiOM = wSums.om;
+  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
+  if (boost) {
+    kpiS += boost.speed;
+    kpiC += boost.cornering;
+    kpiP += boost.powerUnit;
+    kpiT = Math.max(0, kpiT - boost.pitTime);
+  }
+
+  document.getElementById('kSpd').textContent = kpiS;
+  document.getElementById('kCrn').textContent = kpiC;
+  document.getElementById('kPU').textContent = kpiP;
+  document.getElementById('kQual').textContent = kpiQ;
+  document.getElementById('kPit').textContent = kpiT.toFixed(2);
+  document.getElementById('kOM').textContent = kpiOM;
+  document.getElementById('kTotal').textContent = kpiS + kpiC + kpiP + kpiQ + kpiOM;
+
+  // Best From My Inventory (Unweighted)
+  const bestOwnedU = findBestOwnedUnweighted();
+  document.getElementById('overallBody').innerHTML =
+    COMP_TYPES.map(t => renderRow(t, bestOwnedU[t])).join('');
+  renderTotals(bestOwnedU, 'overallTotals');
+
+  // Driver results
+  renderDriverResults();
+
+  // AI Compare
+  renderAICompare();
+
+  // GP Suggested Setup
+  renderGPSuggestedSetup();
+
+  // GP Compare
+  renderGPCompare();
+
+  // Upgrade Advisor
+  renderUpgradeAdvisor();
+}
+</script>
+
+<script>
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function showTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tabResults').style.display = tab === 'results' ? 'block' : 'none';
+  document.getElementById('tabGranPrix').style.display = tab === 'granprix' ? 'block' : 'none';
+}
+
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderAll() {
+  document.getElementById('boostPct').value = state.boostPct;
+  // Restore GP category select
+  if (state.gpCategory) {
+    document.getElementById('gpCategorySelect').value = state.gpCategory;
+  }
+  renderInventory();
+  renderDriverInventory();
+  renderWeights();
+  populateAISeriesSelect();
+  populateGPSeriesSelect();
+  populateBoostSelect();
+  renderBoostStats();
+  recalculate();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+async function init() {
+  const overlay = document.getElementById('loadingOverlay');
+  try {
+    const [compData, driverData, aiData, gpData, boostData, trackData] = await Promise.all([
+      fetch('data/components.json').then(r => { if (!r.ok) throw new Error('components.json'); return r.json(); }),
+      fetch('data/drivers.json').then(r => { if (!r.ok) throw new Error('drivers.json'); return r.json(); }),
+      fetch('data/ai_compare.json').then(r => { if (!r.ok) throw new Error('ai_compare.json'); return r.json(); }),
+      fetch('data/gp_compare.json').then(r => { if (!r.ok) throw new Error('gp_compare.json'); return r.json(); }),
+      fetch('data/boosts.json').then(r => { if (!r.ok) throw new Error('boosts.json'); return r.json(); }),
+      fetch('data/track_stats.json').then(r => { if (!r.ok) throw new Error('track_stats.json'); return r.json(); })
+    ]);
+
+    processComponents(compData);
+    processDrivers(driverData);
+    AI_COMPARE = aiData;
+    GP_COMPARE = gpData;
+    BOOSTS = boostData;
+    TRACK_STATS = trackData;
+
+    // Deduplicate boosts by name (keep first occurrence)
+    const seenBoosts = new Set();
+    BOOSTS = BOOSTS.filter(b => {
+      if (seenBoosts.has(b.name)) return false;
+      seenBoosts.add(b.name);
+      return true;
+    });
+
+    loadState();
+    renderAll();
+
+    overlay.style.display = 'none';
+
+    const savedTheme = localStorage.getItem('f1clash_theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  } catch (err) {
+    overlay.innerHTML = `
+      <div class="error-box">
+        <h2>\u26a0\ufe0f Failed to Load Data</h2>
+        <p>Could not fetch JSON data files. This usually happens when opening the file directly (file:// protocol).</p>
+        <p>The data files need to be served via HTTP. Run this from the <strong>tools/clash</strong> directory:</p>
+        <p><code>py -m http.server 8080</code></p>
+        <p>Then open <code>http://localhost:8080/f1-clash-optimizer.html</code></p>
+        <p style="margin-top:12px;font-size:11px;color:#E10600">Error: ${err.message}</p>
+      </div>
+    `;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
