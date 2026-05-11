@@ -65,7 +65,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .inv-row:last-child{border-bottom:none}
 .inv-row .comp-name{font-size:11px;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .inv-row .slot-rarity{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;flex-shrink:0}
-.inv-row input[type=number]{width:42px;background:var(--card3);color:var(--text);border:1px solid var(--border);border-radius:3px;padding:2px 4px;font-size:11px;text-align:center}
+.inv-row input[type=number]{width:48px;background:var(--card3);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:4px 2px 4px 6px;font-size:12px;font-weight:600;text-align:center}
 .inv-row input[type=number]:focus{outline:none;border-color:var(--blue)}
 .inv-row input[type=number].owned{border-color:var(--green);background:rgba(16,185,129,0.1)}
 .inv-row .lvl-label{font-size:9px;color:var(--text2);flex-shrink:0}
@@ -287,7 +287,7 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
 </div>
 
 <div class="header">
-  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.7</span></h1>
+  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.8</span></h1>
   <button id="themeToggle" onclick="toggleTheme()" style="background:none;border:none;font-size:20px;cursor:pointer;padding:4px 8px" title="Toggle Day/Night mode">🌙</button>
   <div class="kpi-bar" id="kpiBar">
     <div class="kpi speed"><div class="val" id="kSpd">0</div><div class="lbl">Speed</div></div>
@@ -337,14 +337,23 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
     <div class="weights-grid" id="driverWeights"></div>
     <div class="weight-note" id="driverWeightNote"></div>
 
-    <!-- Support Button -->
-    <div style="margin-top:20px;padding:12px;text-align:center;border-top:1px solid var(--border)">
-      <a href="https://paypal.me/slothcr" target="_blank" rel="noopener noreferrer"
-        style="display:inline-flex;align-items:center;gap:8px;background:#0070ba;color:white;text-decoration:none;padding:10px 20px;border-radius:6px;font-size:12px;font-weight:600;transition:background .2s">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.65h6.803c2.277 0 3.94.6 4.9 1.78.46.56.76 1.22.88 1.96.13.79.06 1.74-.21 2.82-.31 1.26-.82 2.33-1.51 3.16-.63.76-1.4 1.35-2.28 1.76-.85.39-1.86.59-2.99.59H9.38a.77.77 0 0 0-.757.65l-.79 5.02-.2 1.28a.641.641 0 0 1-.633.74h.076z"/><path d="M19.87 8.6c-.02.12-.04.25-.07.38-.87 4.47-3.84 6.01-7.64 6.01H10.2a.94.94 0 0 0-.93.79l-.99 6.26-.28 1.78a.5.5 0 0 0 .49.58h3.45a.77.77 0 0 0 .76-.65l.03-.17.6-3.83.04-.21a.77.77 0 0 1 .76-.65h.48c3.1 0 5.53-1.26 6.24-4.9.3-1.52.14-2.79-.65-3.68a3.04 3.04 0 0 0-.87-.71z"/></svg>
-        Support this project
-      </a>
-      <div style="font-size:10px;color:var(--text2);margin-top:6px">If you find this useful, buy me a coffee ☕</div>
+    <!-- Support & Feedback Buttons -->
+    <div style="margin-top:20px;padding:12px;border-top:1px solid var(--border);display:flex;gap:12px;justify-content:center">
+      <div style="text-align:center">
+        <a href="https://paypal.me/slothcr" target="_blank" rel="noopener noreferrer"
+          style="display:inline-flex;align-items:center;gap:6px;background:#0070ba;color:white;text-decoration:none;padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;transition:background .2s">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.65h6.803c2.277 0 3.94.6 4.9 1.78.46.56.76 1.22.88 1.96.13.79.06 1.74-.21 2.82-.31 1.26-.82 2.33-1.51 3.16-.63.76-1.4 1.35-2.28 1.76-.85.39-1.86.59-2.99.59H9.38a.77.77 0 0 0-.757.65l-.79 5.02-.2 1.28a.641.641 0 0 1-.633.74h.076z"/><path d="M19.87 8.6c-.02.12-.04.25-.07.38-.87 4.47-3.84 6.01-7.64 6.01H10.2a.94.94 0 0 0-.93.79l-.99 6.26-.28 1.78a.5.5 0 0 0 .49.58h3.45a.77.77 0 0 0 .76-.65l.03-.17.6-3.83.04-.21a.77.77 0 0 1 .76-.65h.48c3.1 0 5.53-1.26 6.24-4.9.3-1.52.14-2.79-.65-3.68a3.04 3.04 0 0 0-.87-.71z"/></svg>
+          Support this project
+        </a>
+        <div style="font-size:9px;color:var(--text2);margin-top:4px">If you find it helpful buy me a coffee ☕</div>
+      </div>
+      <div style="text-align:center">
+        <a href="https://github.com/SlothCR/F1-Clash-2026-Setup-Optimizer/issues/new/choose" target="_blank" rel="noopener noreferrer"
+          style="display:inline-flex;align-items:center;gap:6px;background:#DA5A0C;color:white;text-decoration:none;padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;transition:background .2s">
+          🐛 Bug / Suggestion
+        </a>
+        <div style="font-size:9px;color:var(--text2);margin-top:4px">Help us improve</div>
+      </div>
     </div>
   </div>
 
@@ -452,9 +461,12 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
 
         <!-- GP Suggested Drivers -->
         <div style="margin-top:12px">
-          <div class="results-title" style="font-size:13px">
-            <span class="badge badge-custom">TUNED</span>
-            Suggested GP Drivers
+          <div class="results-title" style="font-size:13px;justify-content:space-between">
+            <span><span class="badge badge-custom">TUNED</span> Suggested GP Drivers</span>
+            <label style="font-size:10px;color:var(--text2);display:flex;align-items:center;gap:4px;font-weight:400;cursor:pointer">
+              <input type="checkbox" id="gpIncludeLegendary" checked onchange="onGPLegendaryToggle(this.checked)" style="cursor:pointer">
+              Include Legendary
+            </label>
           </div>
           <div id="gpDriverResults"></div>
         </div>
@@ -515,13 +527,17 @@ const state = {
   driverInventory: {},
   compWeights: { speed: 1, cornering: 1, pu: 1, qualifying: 1, pit: 1, overtakeMode: 1 },
   driverWeights: { overtaking: 1, defending: 1, qualifying: 1, raceStart: 1, tyre: 1 },
+  gpCompWeights: { speed: 1, cornering: 1, pu: 1, qualifying: 1, pit: 1, overtakeMode: 1 },
+  gpDriverWeights: { overtaking: 1, defending: 1, qualifying: 1, raceStart: 1, tyre: 1 },
+  activeTab: 'results',
   aiSeries: '',
   gpSeries: '',
   gpCategory: '',
   boostPct: 10,
   boostedComponents: {},
   boostedDrivers: {},
-  selectedBoost: ''
+  selectedBoost: '',
+  gpIncludeLegendary: true
 };
 
 const STORAGE_KEY = 'f1clash_optimizer_v3';
@@ -533,13 +549,16 @@ function saveState() {
       driverInventory: state.driverInventory,
       compWeights: state.compWeights,
       driverWeights: state.driverWeights,
+      gpCompWeights: state.gpCompWeights,
+      gpDriverWeights: state.gpDriverWeights,
       aiSeries: state.aiSeries,
       gpSeries: state.gpSeries,
       gpCategory: state.gpCategory,
       boostPct: state.boostPct,
       boostedComponents: state.boostedComponents,
       boostedDrivers: state.boostedDrivers,
-      selectedBoost: state.selectedBoost
+      selectedBoost: state.selectedBoost,
+      gpIncludeLegendary: state.gpIncludeLegendary
     }));
   } catch(e) {}
 }
@@ -560,6 +579,8 @@ function loadState() {
     }
     if (saved.compWeights) Object.assign(state.compWeights, saved.compWeights);
     if (saved.driverWeights) Object.assign(state.driverWeights, saved.driverWeights);
+    if (saved.gpCompWeights) Object.assign(state.gpCompWeights, saved.gpCompWeights);
+    if (saved.gpDriverWeights) Object.assign(state.gpDriverWeights, saved.gpDriverWeights);
     if (saved.aiSeries) state.aiSeries = saved.aiSeries;
     if (saved.gpSeries) state.gpSeries = saved.gpSeries;
     if (saved.gpCategory) state.gpCategory = saved.gpCategory;
@@ -567,6 +588,7 @@ function loadState() {
     if (saved.boostedComponents) Object.assign(state.boostedComponents, saved.boostedComponents);
     if (saved.boostedDrivers) Object.assign(state.boostedDrivers, saved.boostedDrivers);
     if (saved.selectedBoost != null) state.selectedBoost = saved.selectedBoost;
+    if (saved.gpIncludeLegendary != null) state.gpIncludeLegendary = saved.gpIncludeLegendary;
   } catch(e) {}
 }
 
@@ -825,6 +847,7 @@ function renderInventory() {
             <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
               class="${lvl > 0 ? 'owned' : ''}"
               id="inv-${safeId}"
+              onfocus="this.select()"
               onchange="onInventoryChange('${m.name.replace(/'/g,"\\'")}', this.value, ${m.maxLevel})"
               oninput="onInventoryChange('${m.name.replace(/'/g,"\\'")}', this.value, ${m.maxLevel})">
             <input type="checkbox" class="boost-check" id="boost-${safeId}"
@@ -869,6 +892,7 @@ function renderDriverInventory() {
             <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
               class="${lvl > 0 ? 'owned' : ''}"
               id="dinv-${safeKey}"
+              onfocus="this.select()"
               onchange="onDriverInventoryChange('${m.key}', this.value, ${m.maxLevel})"
               oninput="onDriverInventoryChange('${m.key}', this.value, ${m.maxLevel})">
             <input type="checkbox" class="boost-check" id="dboost-${safeKey}"
@@ -885,7 +909,18 @@ function renderDriverInventory() {
 // ============================================================
 // UI RENDERING — Weights
 // ============================================================
+function getActiveCompWeights() {
+  return state.activeTab === 'granprix' ? state.gpCompWeights : state.compWeights;
+}
+function getActiveDriverWeights() {
+  return state.activeTab === 'granprix' ? state.gpDriverWeights : state.driverWeights;
+}
+
 function renderWeights() {
+  const activeComp = getActiveCompWeights();
+  const activeDrv = getActiveDriverWeights();
+  const tabLabel = state.activeTab === 'granprix' ? ' (GP)' : '';
+
   const compContainer = document.getElementById('compWeights');
   const compLabels = [
     { key: 'speed', label: 'Speed', color: '#3b82f6' },
@@ -898,15 +933,15 @@ function renderWeights() {
   compContainer.innerHTML = compLabels.map(w => `
     <div class="weight-row">
       <label style="color:${w.color}">${w.label}</label>
-      <input type="range" min="1" max="10" value="${state.compWeights[w.key]}"
+      <input type="range" min="1" max="10" value="${activeComp[w.key]}"
         id="cw-${w.key}" oninput="onCompWeight('${w.key}', this.value)"
         style="accent-color:${w.color}">
-      <span class="weight-val" id="cwv-${w.key}">${state.compWeights[w.key]}</span>
+      <span class="weight-val" id="cwv-${w.key}">${activeComp[w.key]}</span>
     </div>
   `).join('');
 
   document.getElementById('compWeightNote').innerHTML =
-    '💡 Rate how important each stat is for your playstyle (1 = low priority, 10 = top priority). Uses weight² so high values strongly dominate selection.';
+    `💡 Rate how important each stat is${tabLabel}. Uses weight² so high values strongly dominate selection.`;
 
   const drvContainer = document.getElementById('driverWeights');
   const drvLabels = [
@@ -919,14 +954,14 @@ function renderWeights() {
   drvContainer.innerHTML = drvLabels.map(w => `
     <div class="weight-row">
       <label>${w.label}</label>
-      <input type="range" min="1" max="10" value="${state.driverWeights[w.key]}"
+      <input type="range" min="1" max="10" value="${activeDrv[w.key]}"
         id="dw-${w.key}" oninput="onDrvWeight('${w.key}', this.value)">
-      <span class="weight-val" id="dwv-${w.key}">${state.driverWeights[w.key]}</span>
+      <span class="weight-val" id="dwv-${w.key}">${activeDrv[w.key]}</span>
     </div>
   `).join('');
 
   document.getElementById('driverWeightNote').innerHTML =
-    '💡 Rate how important each driver skill is for your race strategy. Uses weight² so high values strongly dominate selection.';
+    `💡 Rate how important each driver skill is${tabLabel}. Uses weight² so high values strongly dominate selection.`;
 }
 
 // ============================================================
@@ -997,14 +1032,14 @@ function onDriverInventoryChange(key, val, maxLvl) {
 }
 
 function onCompWeight(key, val) {
-  state.compWeights[key] = parseInt(val);
+  getActiveCompWeights()[key] = parseInt(val);
   document.getElementById(`cwv-${key}`).textContent = val;
   saveState();
   recalculate();
 }
 
 function onDrvWeight(key, val) {
-  state.driverWeights[key] = parseInt(val);
+  getActiveDriverWeights()[key] = parseInt(val);
   document.getElementById(`dwv-${key}`).textContent = val;
   saveState();
   recalculate();
@@ -1033,6 +1068,12 @@ function onBoostChange(val) {
   recalculate();
 }
 
+function onGPLegendaryToggle(checked) {
+  state.gpIncludeLegendary = checked;
+  saveState();
+  renderGPSuggestedSetup();
+}
+
 function toggleTheme() {
   const body = document.body;
   const current = body.getAttribute('data-theme') || 'dark';
@@ -1052,14 +1093,14 @@ function renderBoostStats() {
   const boost = BOOSTS.find(b => b.name === state.selectedBoost);
   if (!boost) { el.innerHTML = ''; return; }
   const stats = [];
-  if (boost.overtaking) stats.push(`<span class="stat-chip spd">OV +${boost.overtaking}</span>`);
-  if (boost.defending) stats.push(`<span class="stat-chip crn">DEF +${boost.defending}</span>`);
-  if (boost.raceStart) stats.push(`<span class="stat-chip pow">RS +${boost.raceStart}</span>`);
-  if (boost.tyre) stats.push(`<span class="stat-chip qua">TYR +${boost.tyre}</span>`);
-  if (boost.speed) stats.push(`<span class="stat-chip spd">SPD +${boost.speed}</span>`);
-  if (boost.cornering) stats.push(`<span class="stat-chip crn">CRN +${boost.cornering}</span>`);
-  if (boost.powerUnit) stats.push(`<span class="stat-chip pow">PU +${boost.powerUnit}</span>`);
-  if (boost.pitTime) stats.push(`<span class="stat-chip pit">PIT -${boost.pitTime}</span>`);
+  if (boost.overtaking) stats.push(`<span class="stat-chip spd" style="font-weight:700;font-size:11px">OV +${boost.overtaking}</span>`);
+  if (boost.defending) stats.push(`<span class="stat-chip crn" style="font-weight:700;font-size:11px">DEF +${boost.defending}</span>`);
+  if (boost.raceStart) stats.push(`<span class="stat-chip pow" style="font-weight:700;font-size:11px">RS +${boost.raceStart}</span>`);
+  if (boost.tyre) stats.push(`<span class="stat-chip qua" style="font-weight:700;font-size:11px">TYR +${boost.tyre}</span>`);
+  if (boost.speed) stats.push(`<span class="stat-chip spd" style="font-weight:700;font-size:11px">SPD +${boost.speed}</span>`);
+  if (boost.cornering) stats.push(`<span class="stat-chip crn" style="font-weight:700;font-size:11px">CRN +${boost.cornering}</span>`);
+  if (boost.powerUnit) stats.push(`<span class="stat-chip pow" style="font-weight:700;font-size:11px">PU +${boost.powerUnit}</span>`);
+  if (boost.pitTime) stats.push(`<span class="stat-chip pit" style="font-weight:700;font-size:11px">PIT -${boost.pitTime}</span>`);
   el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:3px">${stats.join('')}</div>
     <div style="font-size:10px;color:var(--text2);margin-top:4px">Total: ${boost.total}</div>`;
 }
@@ -1067,10 +1108,21 @@ function renderBoostStats() {
 function populateBoostSelect() {
   const sel = document.getElementById('boostSelect');
   sel.innerHTML = '<option value="">— No Boost —</option>';
+  const statKeys = [
+    { key: 'overtaking', label: 'OV' },
+    { key: 'defending', label: 'DEF' },
+    { key: 'raceStart', label: 'RS' },
+    { key: 'tyre', label: 'TYR' },
+    { key: 'speed', label: 'SPD' },
+    { key: 'cornering', label: 'CRN' },
+    { key: 'powerUnit', label: 'PU' },
+    { key: 'pitTime', label: 'PIT' }
+  ];
   BOOSTS.forEach(b => {
     const opt = document.createElement('option');
     opt.value = b.name;
-    opt.textContent = `${b.name} (${b.total})`;
+    const parts = statKeys.filter(s => b[s.key] > 0).map(s => `${s.label}+${Math.round(b[s.key])}`);
+    opt.textContent = `${b.name}${parts.length ? ' · ' + parts.join(' ') : ''}`;
     if (state.selectedBoost === b.name) opt.selected = true;
     sel.appendChild(opt);
   });
@@ -1103,13 +1155,20 @@ function renderTotals(comps, containerId) {
   const sums = { s: 0, c: 0, p: 0, q: 0, t: 0, om: 0 };
   vals.forEach(c => { sums.s += c.s; sums.c += c.c; sums.p += c.p; sums.q += c.q; sums.t += c.t; sums.om += c.om; });
   const total = sums.s + sums.c + sums.p + sums.q + sums.om;
+  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
+  const bS = boost && boost.speed ? 'font-weight:900' : '';
+  const bC = boost && boost.cornering ? 'font-weight:900' : '';
+  const bP = boost && boost.powerUnit ? 'font-weight:900' : '';
+  const bQ = boost && boost.qualifying ? 'font-weight:900' : '';
+  const bT = boost && boost.pitTime ? 'font-weight:900' : '';
+  const bOM = boost && boost.overtakeMode ? 'font-weight:900' : '';
   document.getElementById(containerId).innerHTML = `
-    <div class="kpi speed"><div class="val">${sums.s}</div><div class="lbl">Speed</div></div>
-    <div class="kpi corn"><div class="val">${sums.c}</div><div class="lbl">Cornering</div></div>
-    <div class="kpi pu"><div class="val">${sums.p}</div><div class="lbl">Power Unit</div></div>
-    <div class="kpi qual"><div class="val">${sums.q}</div><div class="lbl">Qualifying</div></div>
-    <div class="kpi pit"><div class="val">${sums.t.toFixed(2)}</div><div class="lbl">Pit Time</div></div>
-    <div class="kpi" style="--stat-color:#00B0F0"><div class="val" style="color:#00B0F0">${sums.om}</div><div class="lbl">OT Mode</div></div>
+    <div class="kpi speed"><div class="val" style="${bS}">${sums.s}</div><div class="lbl">Speed</div></div>
+    <div class="kpi corn"><div class="val" style="${bC}">${sums.c}</div><div class="lbl">Cornering</div></div>
+    <div class="kpi pu"><div class="val" style="${bP}">${sums.p}</div><div class="lbl">Power Unit</div></div>
+    <div class="kpi qual"><div class="val" style="${bQ}">${sums.q}</div><div class="lbl">Qualifying</div></div>
+    <div class="kpi pit"><div class="val" style="${bT}">${sums.t.toFixed(2)}</div><div class="lbl">Pit Time</div></div>
+    <div class="kpi" style="--stat-color:#00B0F0"><div class="val" style="color:#00B0F0;${bOM}">${sums.om}</div><div class="lbl">OT Mode</div></div>
     <div class="kpi total"><div class="val">${total}</div><div class="lbl">Total</div></div>
   `;
   return sums;
@@ -1126,6 +1185,13 @@ function renderDriverResults() {
     return;
   }
 
+  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
+  const bOV = boost && boost.overtaking ? 'font-weight:900' : '';
+  const bDEF = boost && boost.defending ? 'font-weight:900' : '';
+  const bQUAL = boost && boost.qualifying ? 'font-weight:900' : '';
+  const bRS = boost && boost.raceStart ? 'font-weight:900' : '';
+  const bTYR = boost && boost.tyre ? 'font-weight:900' : '';
+
   const rows = [];
   [d1, d2].forEach((d, i) => {
     if (!d) return;
@@ -1134,7 +1200,7 @@ function renderDriverResults() {
     const boostIcon = d._boosted ? ' 🚀' : '';
     rows.push(`<tr>
       <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
-      <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
+      <td class="num" style="${bOV}">${d.ov}</td><td class="num" style="${bDEF}">${d.def}</td><td class="num" style="${bQUAL}">${d.qual}</td><td class="num" style="${bRS}">${d.rs}</td><td class="num" style="${bTYR}">${d.tyre}</td>
       <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
     </tr>`);
   });
@@ -1488,6 +1554,7 @@ function renderGPSuggestedSetup() {
   const gpDrivers = [];
   Object.values(DRIVER_META).flat().forEach(m => {
     if (m.series > maxSeries) return;
+    if (!state.gpIncludeLegendary && m.rarity === 'Legendary') return;
     const lvl = state.driverInventory[m.key] || 0;
     if (lvl > 0) {
       const d = getEffectiveDriver(m.name, m.rarity, lvl);
@@ -1511,13 +1578,19 @@ function renderGPSuggestedSetup() {
   if (topGPDrivers.length === 0) {
     drvEl.innerHTML = '<span style="color:var(--text2);font-size:12px">No eligible drivers owned for this category.</span>';
   } else {
+    const boost = BOOSTS.find(b => b.name === state.selectedBoost);
+    const bOV = boost && boost.overtaking ? 'font-weight:900' : '';
+    const bDEF = boost && boost.defending ? 'font-weight:900' : '';
+    const bQUAL = boost && boost.qualifying ? 'font-weight:900' : '';
+    const bRS = boost && boost.raceStart ? 'font-weight:900' : '';
+    const bTYR = boost && boost.tyre ? 'font-weight:900' : '';
     const rows = topGPDrivers.map(d => {
       const total = d.ov + d.def + d.qual + d.rs + d.tyre;
       const ws = gpDriverWeightedScore(d);
       const boostIcon = d._boosted ? ' 🚀' : '';
       return `<tr>
         <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
-        <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
+        <td class="num" style="${bOV}">${d.ov}</td><td class="num" style="${bDEF}">${d.def}</td><td class="num" style="${bQUAL}">${d.qual}</td><td class="num" style="${bRS}">${d.rs}</td><td class="num" style="${bTYR}">${d.tyre}</td>
         <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
       </tr>`;
     });
@@ -1682,13 +1755,12 @@ function renderCompareTable(bots, container, prefix) {
   const mySums = { s: 0, c: 0, p: 0, q: 0, t: 0, om: 0 };
   Object.values(bestOwnedW).filter(Boolean).forEach(c => { mySums.s += c.s; mySums.c += c.c; mySums.p += c.p; mySums.q += c.q; mySums.t += c.t; mySums.om += c.om; });
 
-  // Apply race boost to car stats
+  // Apply race boost to car stats (pit time excluded — formula is track-dependent and unknown)
   const boost = BOOSTS.find(b => b.name === state.selectedBoost);
   if (boost) {
     mySums.s += boost.speed;
     mySums.c += boost.cornering;
     mySums.p += boost.powerUnit;
-    mySums.t = Math.max(0, mySums.t - boost.pitTime);
   }
 
   const d1 = topDrivers[0] || null;
@@ -1841,6 +1913,14 @@ function recalculate() {
   document.getElementById('kTotal').textContent = kpiS + kpiC + kpiP + kpiQ + kpiOM;
   document.getElementById('kpiBoostLabel').style.display = boost ? 'block' : 'none';
 
+  // Bold KPI values affected by boost
+  document.getElementById('kSpd').style.fontWeight = (boost && boost.speed) ? '900' : '';
+  document.getElementById('kCrn').style.fontWeight = (boost && boost.cornering) ? '900' : '';
+  document.getElementById('kPU').style.fontWeight = (boost && boost.powerUnit) ? '900' : '';
+  document.getElementById('kQual').style.fontWeight = (boost && boost.qualifying) ? '900' : '';
+  document.getElementById('kPit').style.fontWeight = (boost && boost.pitTime) ? '900' : '';
+  document.getElementById('kOM').style.fontWeight = (boost && boost.overtakeMode) ? '900' : '';
+
   // Best From My Inventory (Unweighted)
   const bestOwnedU = findBestOwnedUnweighted();
   document.getElementById('overallBody').innerHTML =
@@ -1873,6 +1953,13 @@ function showTab(tab, btn) {
   btn.classList.add('active');
   document.getElementById('tabResults').style.display = tab === 'results' ? 'block' : 'none';
   document.getElementById('tabGranPrix').style.display = tab === 'granprix' ? 'block' : 'none';
+
+  // Swap weights based on active tab
+  if (tab !== state.activeTab) {
+    state.activeTab = tab;
+    renderWeights();
+    recalculate();
+  }
 }
 
 // ============================================================
@@ -1891,6 +1978,7 @@ function renderAll() {
   populateGPSeriesSelect();
   populateBoostSelect();
   renderBoostStats();
+  document.getElementById('gpIncludeLegendary').checked = state.gpIncludeLegendary;
   recalculate();
 }
 
