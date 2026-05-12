@@ -4,7 +4,8 @@
 - **Team Score in KPI bar** — now shows the real Team Score matching the game's "Puntuación de Equipo" (car stats + pit score + both drivers)
 - **Pit Time → Score formula** — discovered and implemented: `PitScore = round(208.79 - 28.76 × PitTime)`. Verified against game data with max error of 1 point across 91 data points
 - **Car Total in totals bars** — component totals now include pit score conversion (previously excluded)
-- **AI Compare Team Score fixed** — your setup's Team Score now includes pit score, ranking correctly against bots
+- **AI Compare Team Score fixed** — your setup's Team Score now includes pit score, ranking correctly against bots. OT Mode excluded from AI Compare for fair comparison (bot data doesn't include OT)
+- **AI Compare OT disclaimer** — note below section title explaining OT Mode exclusion
 - **Race Boosts clarified** — boosts are race-time mechanics only, do NOT affect Team Score. Removed all boost effects from displayed stats (bold indicators, label, stat modifications). Boost section remains for informational purposes
 - **Unweighted drivers** — top 2 drivers by raw stat total (OV + DEF + QUAL + RS + TYRE) shown below unweighted component table
 - **"Reset to 1" buttons** — next to Component Weights and Driver Weights headers, resets all sliders to 1 for the active tab
