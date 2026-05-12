@@ -6,6 +6,8 @@
 - **Car Total in totals bars** — component totals now include pit score conversion (previously excluded)
 - **AI Compare Team Score fixed** — your setup's Team Score now includes pit score, ranking correctly against bots
 - **Race Boosts clarified** — boosts are race-time mechanics only, do NOT affect Team Score. Removed all boost effects from displayed stats (bold indicators, label, stat modifications). Boost section remains for informational purposes
+- **Unweighted drivers** — top 2 drivers by raw stat total (OV + DEF + QUAL + RS + TYRE) shown below unweighted component table
+- **"Reset to 1" buttons** — next to Component Weights and Driver Weights headers, resets all sliders to 1 for the active tab
 - **"Inspired by TR The Flash's work"** — credit text added to header (italic, top-right)
 - **Bug / Suggestion button** — moved next to PayPal button (#DA5A0C burnt orange), links to GitHub Issues
 
