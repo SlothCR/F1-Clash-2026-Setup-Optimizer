@@ -1745,12 +1745,6 @@ function renderCompareTable(bots, container, prefix) {
   [d1, d2].forEach((d, i) => {
     if (!d) return;
     let dOv = d.ov, dDef = d.def, dQual = d.qual, dRs = d.rs, dTyre = d.tyre;
-    if (boost) {
-      dOv += boost.overtaking;
-      dDef += boost.defending;
-      dRs += boost.raceStart;
-      dTyre += boost.tyre;
-    }
     const driverLabel = `⭐ ${d.name} ${d.rarity} Lv${d.level}`;
     const qualiTotal = dQual + mySums.q;
     const pitScore = Math.round(208.79 - 28.76 * mySums.t);
