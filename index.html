@@ -1991,9 +1991,9 @@ async function init() {
       <div class="error-box">
         <h2>\u26a0\ufe0f Failed to Load Data</h2>
         <p>Could not fetch JSON data files. This usually happens when opening the file directly (file:// protocol).</p>
-        <p>The data files need to be served via HTTP. Run this from the <strong>tools/clash</strong> directory:</p>
+        <p>The data files need to be served via HTTP. Run a local server from the project directory:</p>
         <p><code>py -m http.server 8080</code></p>
-        <p>Then open <code>http://localhost:8080/f1-clash-optimizer.html</code></p>
+        <p>Then open the HTML file in your browser via the server URL.</p>
         <p style="margin-top:12px;font-size:11px;color:#E10600">Error: ${err.message}</p>
       </div>
     `;
