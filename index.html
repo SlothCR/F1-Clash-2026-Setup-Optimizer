@@ -287,7 +287,7 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
 </div>
 
 <div class="header" style="position:relative">
-  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.8</span></h1>
+  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.9</span></h1>
   <button id="themeToggle" onclick="toggleTheme()" style="background:none;border:none;font-size:20px;cursor:pointer;padding:4px 8px" title="Toggle Day/Night mode">🌙</button>
   <span style="position:absolute;top:50%;right:12px;transform:translateY(-50%);font-size:9px;font-style:italic;color:var(--text2)">Inspired by TR The Flash's work</span>
   <div class="kpi-bar" id="kpiBar">
@@ -297,9 +297,8 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
     <div class="kpi qual"><div class="val" id="kQual">0</div><div class="lbl">Qualifying</div></div>
     <div class="kpi pit"><div class="val" id="kPit">0.00</div><div class="lbl">Pit Time</div></div>
     <div class="kpi" style="--stat-color:#00B0F0"><div class="val" id="kOM" style="color:#00B0F0">0</div><div class="lbl">OT Mode</div></div>
-    <div class="kpi total"><div class="val" id="kTotal">0</div><div class="lbl">Total</div></div>
+    <div class="kpi total"><div class="val" id="kTotal">0</div><div class="lbl">Team Score</div></div>
   </div>
-  <div id="kpiBoostLabel" style="display:none;font-size:10px;color:#f59e0b;margin-left:8px;white-space:nowrap;align-self:center">⚡ Includes Race Boost</div>
 </div>
 
 <div class="layout">
@@ -1155,22 +1154,16 @@ function renderTotals(comps, containerId) {
   const vals = Object.values(comps).filter(Boolean);
   const sums = { s: 0, c: 0, p: 0, q: 0, t: 0, om: 0 };
   vals.forEach(c => { sums.s += c.s; sums.c += c.c; sums.p += c.p; sums.q += c.q; sums.t += c.t; sums.om += c.om; });
-  const total = sums.s + sums.c + sums.p + sums.q + sums.om;
-  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
-  const bS = boost && boost.speed ? 'font-weight:900' : '';
-  const bC = boost && boost.cornering ? 'font-weight:900' : '';
-  const bP = boost && boost.powerUnit ? 'font-weight:900' : '';
-  const bQ = boost && boost.qualifying ? 'font-weight:900' : '';
-  const bT = boost && boost.pitTime ? 'font-weight:900' : '';
-  const bOM = boost && boost.overtakeMode ? 'font-weight:900' : '';
+  const pitScore = Math.round(208.79 - 28.76 * sums.t);
+  const total = sums.s + sums.c + sums.p + sums.q + sums.om + pitScore;
   document.getElementById(containerId).innerHTML = `
-    <div class="kpi speed"><div class="val" style="${bS}">${sums.s}</div><div class="lbl">Speed</div></div>
-    <div class="kpi corn"><div class="val" style="${bC}">${sums.c}</div><div class="lbl">Cornering</div></div>
-    <div class="kpi pu"><div class="val" style="${bP}">${sums.p}</div><div class="lbl">Power Unit</div></div>
-    <div class="kpi qual"><div class="val" style="${bQ}">${sums.q}</div><div class="lbl">Qualifying</div></div>
-    <div class="kpi pit"><div class="val" style="${bT}">${sums.t.toFixed(2)}</div><div class="lbl">Pit Time</div></div>
-    <div class="kpi" style="--stat-color:#00B0F0"><div class="val" style="color:#00B0F0;${bOM}">${sums.om}</div><div class="lbl">OT Mode</div></div>
-    <div class="kpi total"><div class="val">${total}</div><div class="lbl">Total</div></div>
+    <div class="kpi speed"><div class="val">${sums.s}</div><div class="lbl">Speed</div></div>
+    <div class="kpi corn"><div class="val">${sums.c}</div><div class="lbl">Cornering</div></div>
+    <div class="kpi pu"><div class="val">${sums.p}</div><div class="lbl">Power Unit</div></div>
+    <div class="kpi qual"><div class="val">${sums.q}</div><div class="lbl">Qualifying</div></div>
+    <div class="kpi pit"><div class="val">${sums.t.toFixed(2)}s</div><div class="lbl">Pit Time</div></div>
+    <div class="kpi" style="--stat-color:#00B0F0"><div class="val" style="color:#00B0F0">${sums.om}</div><div class="lbl">OT Mode</div></div>
+    <div class="kpi total"><div class="val">${total}</div><div class="lbl">Car Total</div></div>
   `;
   return sums;
 }
@@ -1186,13 +1179,6 @@ function renderDriverResults() {
     return;
   }
 
-  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
-  const bOV = boost && boost.overtaking ? 'font-weight:900' : '';
-  const bDEF = boost && boost.defending ? 'font-weight:900' : '';
-  const bQUAL = boost && boost.qualifying ? 'font-weight:900' : '';
-  const bRS = boost && boost.raceStart ? 'font-weight:900' : '';
-  const bTYR = boost && boost.tyre ? 'font-weight:900' : '';
-
   const rows = [];
   [d1, d2].forEach((d, i) => {
     if (!d) return;
@@ -1201,7 +1187,7 @@ function renderDriverResults() {
     const boostIcon = d._boosted ? ' 🚀' : '';
     rows.push(`<tr>
       <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
-      <td class="num" style="${bOV}">${d.ov}</td><td class="num" style="${bDEF}">${d.def}</td><td class="num" style="${bQUAL}">${d.qual}</td><td class="num" style="${bRS}">${d.rs}</td><td class="num" style="${bTYR}">${d.tyre}</td>
+      <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
       <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
     </tr>`);
   });
@@ -1579,19 +1565,13 @@ function renderGPSuggestedSetup() {
   if (topGPDrivers.length === 0) {
     drvEl.innerHTML = '<span style="color:var(--text2);font-size:12px">No eligible drivers owned for this category.</span>';
   } else {
-    const boost = BOOSTS.find(b => b.name === state.selectedBoost);
-    const bOV = boost && boost.overtaking ? 'font-weight:900' : '';
-    const bDEF = boost && boost.defending ? 'font-weight:900' : '';
-    const bQUAL = boost && boost.qualifying ? 'font-weight:900' : '';
-    const bRS = boost && boost.raceStart ? 'font-weight:900' : '';
-    const bTYR = boost && boost.tyre ? 'font-weight:900' : '';
     const rows = topGPDrivers.map(d => {
       const total = d.ov + d.def + d.qual + d.rs + d.tyre;
       const ws = gpDriverWeightedScore(d);
       const boostIcon = d._boosted ? ' 🚀' : '';
       return `<tr>
         <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
-        <td class="num" style="${bOV}">${d.ov}</td><td class="num" style="${bDEF}">${d.def}</td><td class="num" style="${bQUAL}">${d.qual}</td><td class="num" style="${bRS}">${d.rs}</td><td class="num" style="${bTYR}">${d.tyre}</td>
+        <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
         <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
       </tr>`;
     });
@@ -1756,13 +1736,7 @@ function renderCompareTable(bots, container, prefix) {
   const mySums = { s: 0, c: 0, p: 0, q: 0, t: 0, om: 0 };
   Object.values(bestOwnedW).filter(Boolean).forEach(c => { mySums.s += c.s; mySums.c += c.c; mySums.p += c.p; mySums.q += c.q; mySums.t += c.t; mySums.om += c.om; });
 
-  // Apply race boost to car stats (pit time excluded — formula is track-dependent and unknown)
-  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
-  if (boost) {
-    mySums.s += boost.speed;
-    mySums.c += boost.cornering;
-    mySums.p += boost.powerUnit;
-  }
+  // Race Boosts are race-time only — don't affect Team Score or displayed stats
 
   const d1 = topDrivers[0] || null;
   const d2 = topDrivers[1] || null;
@@ -1779,7 +1753,8 @@ function renderCompareTable(bots, container, prefix) {
     }
     const driverLabel = `⭐ ${d.name} ${d.rarity} Lv${d.level}`;
     const qualiTotal = dQual + mySums.q;
-    const teamScore = dOv + dDef + dQual + dRs + dTyre + mySums.s + mySums.c + mySums.p + mySums.q;
+    const pitScore = Math.round(208.79 - 28.76 * mySums.t);
+    const teamScore = dOv + dDef + dQual + dRs + dTyre + mySums.s + mySums.c + mySums.p + mySums.q + pitScore;
     myRows.push({
       driver: driverLabel,
       overtaking: dOv, defending: dDef, qualifying: dQual, raceStart: dRs, tyreMgmt: dTyre,
@@ -1896,31 +1871,21 @@ function recalculate() {
     COMP_TYPES.map(t => renderRow(t, bestOwnedW[t])).join('');
   const wSums = renderTotals(bestOwnedW, 'customTotals');
 
-  // Apply race boost to KPI bar (pit time excluded — formula is track-dependent and unknown)
-  let kpiS = wSums.s, kpiC = wSums.c, kpiP = wSums.p, kpiQ = wSums.q, kpiT = wSums.t, kpiOM = wSums.om;
-  const boost = BOOSTS.find(b => b.name === state.selectedBoost);
-  if (boost) {
-    kpiS += boost.speed;
-    kpiC += boost.cornering;
-    kpiP += boost.powerUnit;
-  }
+  // KPI bar shows base stats — Race Boosts are race-time only, don't affect Team Score
+  document.getElementById('kSpd').textContent = wSums.s;
+  document.getElementById('kCrn').textContent = wSums.c;
+  document.getElementById('kPU').textContent = wSums.p;
+  document.getElementById('kQual').textContent = wSums.q;
+  document.getElementById('kPit').textContent = wSums.t.toFixed(2);
+  document.getElementById('kOM').textContent = wSums.om;
 
-  document.getElementById('kSpd').textContent = kpiS;
-  document.getElementById('kCrn').textContent = kpiC;
-  document.getElementById('kPU').textContent = kpiP;
-  document.getElementById('kQual').textContent = kpiQ;
-  document.getElementById('kPit').textContent = kpiT.toFixed(2);
-  document.getElementById('kOM').textContent = kpiOM;
-  document.getElementById('kTotal').textContent = kpiS + kpiC + kpiP + kpiQ + kpiOM;
-  document.getElementById('kpiBoostLabel').style.display = boost ? 'block' : 'none';
-
-  // Bold KPI values affected by boost
-  document.getElementById('kSpd').style.fontWeight = (boost && boost.speed) ? '900' : '';
-  document.getElementById('kCrn').style.fontWeight = (boost && boost.cornering) ? '900' : '';
-  document.getElementById('kPU').style.fontWeight = (boost && boost.powerUnit) ? '900' : '';
-  document.getElementById('kQual').style.fontWeight = (boost && boost.qualifying) ? '900' : '';
-  document.getElementById('kPit').style.fontWeight = (boost && boost.pitTime) ? '900' : '';
-  document.getElementById('kOM').style.fontWeight = (boost && boost.overtakeMode) ? '900' : '';
+  // Team Score = car stats + pit score + driver stats (matches game's "Puntuación de Equipo")
+  const pitScore = Math.round(208.79 - 28.76 * wSums.t);
+  const topDrivers = getTopDrivers(2);
+  let driverTotal = 0;
+  topDrivers.forEach(d => { driverTotal += d.ov + d.def + d.qual + d.rs + d.tyre; });
+  const teamScore = wSums.s + wSums.c + wSums.p + wSums.q + wSums.om + pitScore + driverTotal;
+  document.getElementById('kTotal').textContent = teamScore;
 
   // Best From My Inventory (Unweighted)
   const bestOwnedU = findBestOwnedUnweighted();
