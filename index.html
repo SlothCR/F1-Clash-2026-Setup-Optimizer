@@ -1503,10 +1503,20 @@ function renderGPSuggestedSetup() {
   setupDiv.style.display = 'block';
   const maxSeries = GP_CATEGORY_MAX_SERIES[category] || 12;
 
-  // Get track-specific weights (or fall back to global weights)
+  // Get track-specific weights merged with user's GP slider weights
   const gpWeights = getGPWeights();
-  const useCompWeights = gpWeights ? gpWeights.compWeights : state.compWeights;
-  const useDriverWeights = gpWeights ? gpWeights.driverWeights : state.driverWeights;
+  const useCompWeights = { ...state.gpCompWeights };
+  const useDriverWeights = { ...state.gpDriverWeights };
+
+  // If a track is selected, multiply user weights by track focus weights
+  if (gpWeights) {
+    Object.keys(useCompWeights).forEach(k => {
+      useCompWeights[k] = useCompWeights[k] * gpWeights.compWeights[k];
+    });
+    Object.keys(useDriverWeights).forEach(k => {
+      useDriverWeights[k] = useDriverWeights[k] * gpWeights.driverWeights[k];
+    });
+  }
 
   // Show track focus note
   const location = state.gpSeries;

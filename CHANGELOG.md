@@ -1,5 +1,8 @@
 # F1 Clash 2026 Setup Optimizer — Changelog
 
+## v3.9.1 (May 2026)
+- **GP Weight sliders now work** — fixed bug where Component Weights and Driver Weights on the Grand Prix tab had no effect on the Suggested GP Setup. Sliders were being ignored in favor of hardcoded track-focus weights or the Results tab weights. Now the user's GP slider values are always used, with track focus multiplied on top when a location is selected.
+
 ## v3.9 (May 2026)
 - **Team Score in KPI bar** — now shows the real Team Score matching the game's "Puntuación de Equipo" (car stats + pit score + both drivers)
 - **Pit Time → Score formula** — discovered and implemented: `PitScore = round(208.79 - 28.76 × PitTime)`. Verified against game data with max error of 1 point across 91 data points
