@@ -87,6 +87,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rarity-Epic{background:#FF00FF;color:white}
 .rarity-Legendary{background:#D4AF37;color:white}
 .rarity-Starter{background:#888;color:white}
+.rarity-PaddockPick{background:#E8E8E8;color:#333}
+.rarity-PaddockPickTurbo{background:#00BCD4;color:white}
 
 /* Component slots */
 .slot{background:var(--card2);border-radius:6px;padding:10px;margin-bottom:8px;border:1px solid var(--border);transition:border-color .2s}
@@ -501,8 +503,9 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
 let COMPONENTS = [];
 let COMP_META = {};
 const COMP_TYPES = ["Brakes","Gearbox","RearWing","FrontWing","Suspension","Engine","Battery"];
-const RARITY_MAX = { Starter: 1, Common: 11, Rare: 9, Epic: 8, Legendary: 5 };
-const RARITY_ORDER = ['Common','Rare','Epic','Legendary'];
+const RARITY_MAX = { Starter: 1, Common: 11, Rare: 9, Epic: 8, Legendary: 7, "Paddock Pick": 7, "Paddock Pick Turbo": 7 };
+const RARITY_ORDER = ['Common','Rare','Epic','Legendary','Paddock Pick','Paddock Pick Turbo'];
+function rarityClass(r) { return r.replace(/\s+/g, ''); }
 
 let DRIVERS = [];
 let DRIVER_META = {};
@@ -833,7 +836,7 @@ function renderInventory() {
           if (m.rarity === 'Starter') {
             return `<div class="inv-row">
               <span class="comp-name">${m.name}</span>
-              <span class="slot-rarity rarity-${m.rarity}">Starter</span>
+              <span class="slot-rarity rarity-${rarityClass(m.rarity)}">Starter</span>
               <span class="lvl-label">Lvl</span>
               <span style="width:42px;text-align:center;font-size:11px;color:var(--text2)">1</span>
               <input type="checkbox" class="boost-check" id="boost-${safeId}"
@@ -843,7 +846,7 @@ function renderInventory() {
           }
           return `<div class="inv-row">
             <span class="comp-name">${m.name}</span>
-            <span class="slot-rarity rarity-${m.rarity}">${m.rarity}</span>
+            <span class="slot-rarity rarity-${rarityClass(m.rarity)}">${m.rarity}</span>
             <span class="lvl-label">Lvl</span>
             <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
               class="${lvl > 0 ? 'owned' : ''}"
@@ -868,7 +871,12 @@ function renderInventory() {
 function renderDriverInventory() {
   const container = document.getElementById('driverInventorySlots');
   container.innerHTML = '';
-  RARITY_ORDER.forEach(rarity => {
+  
+  // Combine Paddock Pick and Paddock Pick Turbo into one section
+  const ppCombinedRarities = ['Paddock Pick', 'Paddock Pick Turbo'];
+  const renderOrder = RARITY_ORDER.filter(r => !ppCombinedRarities.includes(r));
+  
+  renderOrder.forEach(rarity => {
     const meta = (DRIVER_META[rarity] || []).slice().sort((a, b) => a.name.localeCompare(b.name));
     if (meta.length === 0) return;
     const ownedCount = meta.filter(m => (state.driverInventory[m.key] || 0) > 0).length;
@@ -888,7 +896,7 @@ function renderDriverInventory() {
           const isBoosted = state.boostedDrivers[m.key] || false;
           return `<div class="inv-row">
             <span class="comp-name">${m.name}</span>
-            <span class="slot-rarity rarity-${m.rarity}">${m.rarity}</span>
+            <span class="slot-rarity rarity-${rarityClass(m.rarity)}">${m.rarity}</span>
             <span class="lvl-label">Lvl</span>
             <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
               class="${lvl > 0 ? 'owned' : ''}"
@@ -905,6 +913,44 @@ function renderDriverInventory() {
     `;
     container.appendChild(group);
   });
+
+  // Render combined Paddock Pick section
+  const ppMeta = ppCombinedRarities.flatMap(r => (DRIVER_META[r] || []).slice()).sort((a, b) => a.name.localeCompare(b.name) || a.rarity.localeCompare(b.rarity));
+  if (ppMeta.length > 0) {
+    const ppOwnedCount = ppMeta.filter(m => (state.driverInventory[m.key] || 0) > 0).length;
+    const ppGroup = document.createElement('div');
+    ppGroup.className = 'inv-group';
+    ppGroup.innerHTML = `
+      <div class="inv-group-header" onclick="toggleGroup('drv-PaddockPick')">
+        <span class="type-name">Paddock Pick Drivers</span>
+        <span class="owned-count">${ppOwnedCount}/${ppMeta.length} owned</span>
+        <span class="chevron" id="chev-drv-PaddockPick">&#9654;</span>
+      </div>
+      <div class="inv-group-body" id="body-drv-PaddockPick">
+        ${ppMeta.map(m => {
+          const lvl = state.driverInventory[m.key] || 0;
+          const safeKey = m.key.replace(/[\s.]/g,'_');
+          const isBoosted = state.boostedDrivers[m.key] || false;
+          const label = m.rarity === 'Paddock Pick Turbo' ? 'Turbo' : 'Normal';
+          return `<div class="inv-row">
+            <span class="comp-name">${m.name}</span>
+            <span class="slot-rarity rarity-${rarityClass(m.rarity)}">${label}</span>
+            <span class="lvl-label">Lvl</span>
+            <input type="number" min="0" max="${m.maxLevel}" value="${lvl}"
+              class="${lvl > 0 ? 'owned' : ''}"
+              id="dinv-${safeKey}"
+              onfocus="this.select()"
+              onchange="onDriverInventoryChange('${m.key}', this.value, ${m.maxLevel})"
+              oninput="onDriverInventoryChange('${m.key}', this.value, ${m.maxLevel})">
+            <input type="checkbox" class="boost-check" id="dboost-${safeKey}"
+              ${isBoosted ? 'checked' : ''}
+              onchange="onBoostToggle('drv', '${m.key}', this.checked)">
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    container.appendChild(ppGroup);
+  }
 }
 
 // ============================================================
@@ -1155,7 +1201,7 @@ function renderRow(type, comp) {
   const omDisplay = comp.y === 'Battery' ? comp.om : '—';
   return `<tr>
     <td>${type.replace(/([A-Z])/g,' $1').trim()}</td>
-    <td><span class="comp-name">${comp.n}${boostIcon}</span> <span class="slot-rarity rarity-${comp.r}" style="font-size:9px;vertical-align:middle">${comp.r}</span></td>
+    <td><span class="comp-name">${comp.n}${boostIcon}</span> <span class="slot-rarity rarity-${rarityClass(comp.r)}" style="font-size:9px;vertical-align:middle">${comp.r}</span></td>
     <td class="comp-level">${comp.l}</td>
     <td class="num" style="color:#60a5fa">${comp.s}</td>
     <td class="num" style="color:#fbbf24">${comp.c}</td>
@@ -1210,7 +1256,7 @@ function renderUnweightedDriverResults() {
     const total = d.ov + d.def + d.qual + d.rs + d.tyre;
     const boostIcon = d._boosted ? ' 🚀' : '';
     return `<tr>
-      <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
+      <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${rarityClass(d.rarity)}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
       <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
       <td class="num" style="font-weight:700">${total}</td>
     </tr>`;
@@ -1242,7 +1288,7 @@ function renderDriverResults() {
     const ws = driverWeightedScore(d);
     const boostIcon = d._boosted ? ' 🚀' : '';
     rows.push(`<tr>
-      <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
+      <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${rarityClass(d.rarity)}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
       <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
       <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
     </tr>`);
@@ -1378,7 +1424,7 @@ function renderUpgradeAdvisor() {
     const boostIcon = (s.kind === 'component' ? state.boostedComponents[s.name] : state.boostedDrivers[s.name + '_' + s.rarity]) ? ' 🚀' : '';
     html += `<tr>
       <td>${typeDisplay}</td>
-      <td><span class="comp-name">${s.name}${boostIcon}</span> <span class="slot-rarity rarity-${s.rarity}" style="font-size:9px;vertical-align:middle">${s.rarity}</span></td>
+      <td><span class="comp-name">${s.name}${boostIcon}</span> <span class="slot-rarity rarity-${rarityClass(s.rarity)}" style="font-size:9px;vertical-align:middle">${s.rarity}</span></td>
       <td class="num">${s.currentLvl}</td>
       <td class="num" style="color:var(--green)">\u2192 ${s.nextLvl}</td>
       <td class="num">${s.currentTotal}</td>
@@ -1636,7 +1682,7 @@ function renderGPSuggestedSetup() {
       const ws = gpDriverWeightedScore(d);
       const boostIcon = d._boosted ? ' 🚀' : '';
       return `<tr>
-        <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${d.rarity}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
+        <td><span class="comp-name">${d.name}${boostIcon}</span> <span class="slot-rarity rarity-${rarityClass(d.rarity)}" style="font-size:9px;vertical-align:middle">${d.rarity}</span> <span class="comp-level">Lv${d.level}</span></td>
         <td class="num">${d.ov}</td><td class="num">${d.def}</td><td class="num">${d.qual}</td><td class="num">${d.rs}</td><td class="num">${d.tyre}</td>
         <td class="num" style="font-weight:700">${total}</td><td class="num" style="color:var(--blue)">${ws.toFixed(1)}</td>
       </tr>`;

@@ -1,5 +1,14 @@
 # F1 Clash 2026 Setup Optimizer — Changelog
 
+## v4.0 (August 2026)
+- **Paddock Pick Drivers** — new Special Edition tier with Normal and Turbo variants
+  - 8 drivers: Piastri, Colapinto, Lindblad, Gasly, Bortoleto, Bearman, Hadjar, Antonelli
+  - Normal (silver badge) + Turbo (turquoise badge) shown in a single combined inventory section
+  - Max level 7, stats at Level 1 and Level 7 (intermediate levels TBD)
+- **Johnny Herbert added to Legendary Drivers** — full Level 1-7 progression
+- **Legendary max level corrected** — now 7 (was incorrectly set to 5)
+- **Rarity CSS helper** — supports rarity names with spaces (future-proof)
+
 ## v3.9.1 (May 2026)
 - **GP Weight sliders now work** — fixed bug where Component Weights and Driver Weights on the Grand Prix tab had no effect on the Suggested GP Setup. Sliders were being ignored in favor of hardcoded track-focus weights or the Results tab weights. Now the user's GP slider values are always used, with track focus multiplied on top when a location is selected.
 
