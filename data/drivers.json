@@ -9338,6 +9338,18 @@
  {
   "name": "Piastri",
   "rarity": "Paddock Pick",
+  "level": 2,
+  "overtaking": 21.0,
+  "defending": 37.0,
+  "qualifying": 33.0,
+  "raceStart": 29.0,
+  "tyre": 25.0,
+  "total": 145.0,
+  "series": 13
+ },
+ {
+  "name": "Piastri",
+  "rarity": "Paddock Pick",
   "level": 7,
   "overtaking": 45.0,
   "defending": 61.0,
