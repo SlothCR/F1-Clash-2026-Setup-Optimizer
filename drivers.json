@@ -5025,7 +5025,7 @@
   "raceStart": 65.0,
   "tyre": 47.0,
   "total": 265.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Andretti",
@@ -5037,7 +5037,7 @@
   "raceStart": 70.0,
   "tyre": 52.0,
   "total": 290.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Andretti",
@@ -5049,7 +5049,7 @@
   "raceStart": 74.0,
   "tyre": 56.0,
   "total": 310.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Andretti",
@@ -5061,7 +5061,7 @@
   "raceStart": 79.0,
   "tyre": 61.0,
   "total": 335.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Andretti",
@@ -5073,7 +5073,7 @@
   "raceStart": 83.0,
   "tyre": 65.0,
   "total": 355.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Andretti",
@@ -5085,7 +5085,7 @@
   "raceStart": 88.0,
   "tyre": 70.0,
   "total": 380.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Andretti",
@@ -5097,7 +5097,7 @@
   "raceStart": 92.0,
   "tyre": 74.0,
   "total": 400.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Berger",
@@ -5109,7 +5109,7 @@
   "raceStart": 40.0,
   "tyre": 46.0,
   "total": 200.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Berger",
@@ -5121,7 +5121,7 @@
   "raceStart": 45.0,
   "tyre": 51.0,
   "total": 225.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Berger",
@@ -5133,7 +5133,7 @@
   "raceStart": 49.0,
   "tyre": 55.0,
   "total": 245.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Berger",
@@ -5145,7 +5145,7 @@
   "raceStart": 53.0,
   "tyre": 59.0,
   "total": 265.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Berger",
@@ -5157,7 +5157,7 @@
   "raceStart": 58.0,
   "tyre": 64.0,
   "total": 290.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Berger",
@@ -5169,7 +5169,7 @@
   "raceStart": 62.0,
   "tyre": 68.0,
   "total": 310.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Berger",
@@ -5181,7 +5181,7 @@
   "raceStart": 67.0,
   "tyre": 73.0,
   "total": 335.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Brabham",
@@ -5193,7 +5193,7 @@
   "raceStart": 67.0,
   "tyre": 70.0,
   "total": 335.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Brabham",
@@ -5205,7 +5205,7 @@
   "raceStart": 71.0,
   "tyre": 74.0,
   "total": 355.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Brabham",
@@ -5217,7 +5217,7 @@
   "raceStart": 76.0,
   "tyre": 79.0,
   "total": 380.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Brabham",
@@ -5229,7 +5229,7 @@
   "raceStart": 80.0,
   "tyre": 83.0,
   "total": 400.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Brabham",
@@ -5241,7 +5241,7 @@
   "raceStart": 85.0,
   "tyre": 88.0,
   "total": 425.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Brabham",
@@ -5253,7 +5253,7 @@
   "raceStart": 89.0,
   "tyre": 92.0,
   "total": 445.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Brabham",
@@ -5265,7 +5265,7 @@
   "raceStart": 93.0,
   "tyre": 96.0,
   "total": 465.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Button",
@@ -5277,7 +5277,7 @@
   "raceStart": 41.0,
   "tyre": 65.0,
   "total": 265.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Button",
@@ -5289,7 +5289,7 @@
   "raceStart": 46.0,
   "tyre": 70.0,
   "total": 290.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Button",
@@ -5301,7 +5301,7 @@
   "raceStart": 50.0,
   "tyre": 74.0,
   "total": 310.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Button",
@@ -5313,7 +5313,7 @@
   "raceStart": 55.0,
   "tyre": 79.0,
   "total": 335.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Button",
@@ -5325,7 +5325,7 @@
   "raceStart": 59.0,
   "tyre": 83.0,
   "total": 355.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Button",
@@ -5337,7 +5337,7 @@
   "raceStart": 64.0,
   "tyre": 88.0,
   "total": 380.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Button",
@@ -5349,7 +5349,7 @@
   "raceStart": 68.0,
   "tyre": 92.0,
   "total": 400.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Coulthard",
@@ -5361,7 +5361,7 @@
   "raceStart": 28.0,
   "tyre": 52.0,
   "total": 200.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Coulthard",
@@ -5373,7 +5373,7 @@
   "raceStart": 33.0,
   "tyre": 57.0,
   "total": 225.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Coulthard",
@@ -5385,7 +5385,7 @@
   "raceStart": 37.0,
   "tyre": 61.0,
   "total": 245.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Coulthard",
@@ -5397,7 +5397,7 @@
   "raceStart": 41.0,
   "tyre": 65.0,
   "total": 265.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Coulthard",
@@ -5409,7 +5409,7 @@
   "raceStart": 46.0,
   "tyre": 70.0,
   "total": 290.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Coulthard",
@@ -5421,7 +5421,7 @@
   "raceStart": 50.0,
   "tyre": 74.0,
   "total": 310.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Coulthard",
@@ -5433,7 +5433,7 @@
   "raceStart": 55.0,
   "tyre": 79.0,
   "total": 335.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "D.Hill",
@@ -5445,7 +5445,7 @@
   "raceStart": 59.0,
   "tyre": 47.0,
   "total": 265.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "D.Hill",
@@ -5457,7 +5457,7 @@
   "raceStart": 64.0,
   "tyre": 52.0,
   "total": 290.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "D.Hill",
@@ -5469,7 +5469,7 @@
   "raceStart": 68.0,
   "tyre": 56.0,
   "total": 310.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "D.Hill",
@@ -5481,7 +5481,7 @@
   "raceStart": 73.0,
   "tyre": 61.0,
   "total": 335.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "D.Hill",
@@ -5493,7 +5493,7 @@
   "raceStart": 77.0,
   "tyre": 65.0,
   "total": 355.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "D.Hill",
@@ -5505,7 +5505,7 @@
   "raceStart": 82.0,
   "tyre": 70.0,
   "total": 380.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "D.Hill",
@@ -5517,7 +5517,7 @@
   "raceStart": 86.0,
   "tyre": 74.0,
   "total": 400.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Fangio",
@@ -5529,7 +5529,7 @@
   "raceStart": 65.0,
   "tyre": 68.0,
   "total": 340.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fangio",
@@ -5541,7 +5541,7 @@
   "raceStart": 69.0,
   "tyre": 72.0,
   "total": 360.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fangio",
@@ -5553,7 +5553,7 @@
   "raceStart": 74.0,
   "tyre": 77.0,
   "total": 385.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fangio",
@@ -5565,7 +5565,7 @@
   "raceStart": 78.0,
   "tyre": 81.0,
   "total": 405.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fangio",
@@ -5577,7 +5577,7 @@
   "raceStart": 82.0,
   "tyre": 85.0,
   "total": 425.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fangio",
@@ -5589,7 +5589,7 @@
   "raceStart": 87.0,
   "tyre": 90.0,
   "total": 450.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fangio",
@@ -5601,7 +5601,7 @@
   "raceStart": 91.0,
   "tyre": 94.0,
   "total": 470.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fisichella",
@@ -5613,7 +5613,7 @@
   "raceStart": 30.0,
   "tyre": 26.0,
   "total": 110.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fisichella",
@@ -5625,7 +5625,7 @@
   "raceStart": 35.0,
   "tyre": 31.0,
   "total": 135.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fisichella",
@@ -5637,7 +5637,7 @@
   "raceStart": 39.0,
   "tyre": 35.0,
   "total": 155.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fisichella",
@@ -5649,7 +5649,7 @@
   "raceStart": 44.0,
   "tyre": 40.0,
   "total": 180.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fisichella",
@@ -5661,7 +5661,7 @@
   "raceStart": 48.0,
   "tyre": 44.0,
   "total": 200.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fisichella",
@@ -5673,7 +5673,7 @@
   "raceStart": 53.0,
   "tyre": 49.0,
   "total": 225.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fisichella",
@@ -5685,7 +5685,7 @@
   "raceStart": 57.0,
   "tyre": 53.0,
   "total": 245.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Fittipaldi",
@@ -5697,7 +5697,7 @@
   "raceStart": 61.0,
   "tyre": 64.0,
   "total": 335.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fittipaldi",
@@ -5709,7 +5709,7 @@
   "raceStart": 65.0,
   "tyre": 68.0,
   "total": 355.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fittipaldi",
@@ -5721,7 +5721,7 @@
   "raceStart": 70.0,
   "tyre": 73.0,
   "total": 380.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fittipaldi",
@@ -5733,7 +5733,7 @@
   "raceStart": 74.0,
   "tyre": 77.0,
   "total": 400.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fittipaldi",
@@ -5745,7 +5745,7 @@
   "raceStart": 79.0,
   "tyre": 82.0,
   "total": 425.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fittipaldi",
@@ -5757,7 +5757,7 @@
   "raceStart": 83.0,
   "tyre": 86.0,
   "total": 445.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Fittipaldi",
@@ -5769,7 +5769,7 @@
   "raceStart": 87.0,
   "tyre": 90.0,
   "total": 465.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5781,7 +5781,7 @@
   "raceStart": 64.0,
   "tyre": 70.0,
   "total": 335.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5793,7 +5793,7 @@
   "raceStart": 68.0,
   "tyre": 74.0,
   "total": 355.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5805,7 +5805,7 @@
   "raceStart": 73.0,
   "tyre": 79.0,
   "total": 380.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5817,7 +5817,7 @@
   "raceStart": 77.0,
   "tyre": 83.0,
   "total": 400.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5829,7 +5829,7 @@
   "raceStart": 82.0,
   "tyre": 88.0,
   "total": 425.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5841,7 +5841,7 @@
   "raceStart": 86.0,
   "tyre": 92.0,
   "total": 445.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Hill",
@@ -5853,7 +5853,7 @@
   "raceStart": 90.0,
   "tyre": 96.0,
   "total": 465.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "G.Villeneuve",
@@ -5865,7 +5865,7 @@
   "raceStart": 18.0,
   "tyre": 30.0,
   "total": 110.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "G.Villeneuve",
@@ -5877,7 +5877,7 @@
   "raceStart": 23.0,
   "tyre": 35.0,
   "total": 135.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "G.Villeneuve",
@@ -5889,7 +5889,7 @@
   "raceStart": 27.0,
   "tyre": 39.0,
   "total": 155.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "G.Villeneuve",
@@ -5901,7 +5901,7 @@
   "raceStart": 32.0,
   "tyre": 44.0,
   "total": 180.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "G.Villeneuve",
@@ -5913,7 +5913,7 @@
   "raceStart": 36.0,
   "tyre": 48.0,
   "total": 200.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "G.Villeneuve",
@@ -5925,7 +5925,7 @@
   "raceStart": 41.0,
   "tyre": 53.0,
   "total": 225.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "G.Villeneuve",
@@ -5937,7 +5937,7 @@
   "raceStart": 45.0,
   "tyre": 57.0,
   "total": 245.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Hunt",
@@ -5949,7 +5949,7 @@
   "raceStart": 47.0,
   "tyre": 53.0,
   "total": 265.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Hunt",
@@ -5961,7 +5961,7 @@
   "raceStart": 52.0,
   "tyre": 58.0,
   "total": 290.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Hunt",
@@ -5973,7 +5973,7 @@
   "raceStart": 56.0,
   "tyre": 62.0,
   "total": 310.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Hunt",
@@ -5985,7 +5985,7 @@
   "raceStart": 61.0,
   "tyre": 67.0,
   "total": 335.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Hunt",
@@ -5997,7 +5997,7 @@
   "raceStart": 65.0,
   "tyre": 71.0,
   "total": 355.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Hunt",
@@ -6009,7 +6009,7 @@
   "raceStart": 70.0,
   "tyre": 76.0,
   "total": 380.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Hunt",
@@ -6021,7 +6021,7 @@
   "raceStart": 74.0,
   "tyre": 80.0,
   "total": 400.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6033,7 +6033,7 @@
   "raceStart": 59.0,
   "tyre": 41.0,
   "total": 265.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6045,7 +6045,7 @@
   "raceStart": 64.0,
   "tyre": 46.0,
   "total": 290.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6057,7 +6057,7 @@
   "raceStart": 68.0,
   "tyre": 50.0,
   "total": 310.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6069,7 +6069,7 @@
   "raceStart": 73.0,
   "tyre": 55.0,
   "total": 335.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6081,7 +6081,7 @@
   "raceStart": 77.0,
   "tyre": 59.0,
   "total": 355.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6093,7 +6093,7 @@
   "raceStart": 82.0,
   "tyre": 64.0,
   "total": 380.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "J.Villeneuve",
@@ -6105,7 +6105,7 @@
   "raceStart": 86.0,
   "tyre": 68.0,
   "total": 400.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Lauda",
@@ -6117,7 +6117,7 @@
   "raceStart": 73.0,
   "tyre": 64.0,
   "total": 335.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Lauda",
@@ -6129,7 +6129,7 @@
   "raceStart": 77.0,
   "tyre": 68.0,
   "total": 355.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Lauda",
@@ -6141,7 +6141,7 @@
   "raceStart": 82.0,
   "tyre": 73.0,
   "total": 380.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Lauda",
@@ -6153,7 +6153,7 @@
   "raceStart": 86.0,
   "tyre": 77.0,
   "total": 400.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Lauda",
@@ -6165,7 +6165,7 @@
   "raceStart": 91.0,
   "tyre": 82.0,
   "total": 425.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Lauda",
@@ -6177,7 +6177,7 @@
   "raceStart": 95.0,
   "tyre": 86.0,
   "total": 445.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Lauda",
@@ -6189,7 +6189,7 @@
   "raceStart": 99.0,
   "tyre": 90.0,
   "total": 465.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Mansell",
@@ -6201,7 +6201,7 @@
   "raceStart": 58.0,
   "tyre": 46.0,
   "total": 290.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Mansell",
@@ -6213,7 +6213,7 @@
   "raceStart": 62.0,
   "tyre": 50.0,
   "total": 310.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Mansell",
@@ -6225,7 +6225,7 @@
   "raceStart": 67.0,
   "tyre": 55.0,
   "total": 335.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Mansell",
@@ -6237,7 +6237,7 @@
   "raceStart": 71.0,
   "tyre": 59.0,
   "total": 355.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Mansell",
@@ -6249,7 +6249,7 @@
   "raceStart": 76.0,
   "tyre": 64.0,
   "total": 380.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Mansell",
@@ -6261,7 +6261,7 @@
   "raceStart": 80.0,
   "tyre": 68.0,
   "total": 400.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Mansell",
@@ -6273,7 +6273,7 @@
   "raceStart": 85.0,
   "tyre": 73.0,
   "total": 425.0,
-  "series": 0
+  "series": 9
  },
  {
   "name": "Massa",
@@ -6285,7 +6285,7 @@
   "raceStart": 52.0,
   "tyre": 34.0,
   "total": 200.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Massa",
@@ -6297,7 +6297,7 @@
   "raceStart": 57.0,
   "tyre": 39.0,
   "total": 225.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Massa",
@@ -6309,7 +6309,7 @@
   "raceStart": 61.0,
   "tyre": 43.0,
   "total": 245.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Massa",
@@ -6321,7 +6321,7 @@
   "raceStart": 65.0,
   "tyre": 47.0,
   "total": 265.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Massa",
@@ -6333,7 +6333,7 @@
   "raceStart": 70.0,
   "tyre": 52.0,
   "total": 290.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Massa",
@@ -6345,7 +6345,7 @@
   "raceStart": 74.0,
   "tyre": 56.0,
   "total": 310.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Massa",
@@ -6357,7 +6357,7 @@
   "raceStart": 79.0,
   "tyre": 61.0,
   "total": 335.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "McLaren",
@@ -6369,7 +6369,7 @@
   "raceStart": 14.0,
   "tyre": 18.0,
   "total": 110.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "McLaren",
@@ -6381,7 +6381,7 @@
   "raceStart": 19.0,
   "tyre": 23.0,
   "total": 135.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "McLaren",
@@ -6393,7 +6393,7 @@
   "raceStart": 23.0,
   "tyre": 27.0,
   "total": 155.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "McLaren",
@@ -6405,7 +6405,7 @@
   "raceStart": 28.0,
   "tyre": 32.0,
   "total": 180.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "McLaren",
@@ -6417,7 +6417,7 @@
   "raceStart": 32.0,
   "tyre": 36.0,
   "total": 200.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "McLaren",
@@ -6429,7 +6429,7 @@
   "raceStart": 37.0,
   "tyre": 41.0,
   "total": 225.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "McLaren",
@@ -6441,7 +6441,7 @@
   "raceStart": 41.0,
   "tyre": 45.0,
   "total": 245.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Prost",
@@ -6453,7 +6453,7 @@
   "raceStart": 72.0,
   "tyre": 75.0,
   "total": 345.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Prost",
@@ -6465,7 +6465,7 @@
   "raceStart": 76.0,
   "tyre": 79.0,
   "total": 365.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Prost",
@@ -6477,7 +6477,7 @@
   "raceStart": 80.0,
   "tyre": 83.0,
   "total": 385.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Prost",
@@ -6489,7 +6489,7 @@
   "raceStart": 85.0,
   "tyre": 88.0,
   "total": 410.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Prost",
@@ -6501,7 +6501,7 @@
   "raceStart": 89.0,
   "tyre": 92.0,
   "total": 430.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Prost",
@@ -6513,7 +6513,7 @@
   "raceStart": 94.0,
   "tyre": 97.0,
   "total": 455.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Prost",
@@ -6525,7 +6525,7 @@
   "raceStart": 98.0,
   "tyre": 101.0,
   "total": 475.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Rindt",
@@ -6537,7 +6537,7 @@
   "raceStart": 34.0,
   "tyre": 46.0,
   "total": 200.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Rindt",
@@ -6549,7 +6549,7 @@
   "raceStart": 39.0,
   "tyre": 51.0,
   "total": 225.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Rindt",
@@ -6561,7 +6561,7 @@
   "raceStart": 43.0,
   "tyre": 55.0,
   "total": 245.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Rindt",
@@ -6573,7 +6573,7 @@
   "raceStart": 47.0,
   "tyre": 59.0,
   "total": 265.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Rindt",
@@ -6585,7 +6585,7 @@
   "raceStart": 52.0,
   "tyre": 64.0,
   "total": 290.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Rindt",
@@ -6597,7 +6597,7 @@
   "raceStart": 56.0,
   "tyre": 68.0,
   "total": 310.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Rindt",
@@ -6609,7 +6609,7 @@
   "raceStart": 61.0,
   "tyre": 73.0,
   "total": 335.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Schumacher",
@@ -6621,7 +6621,7 @@
   "raceStart": 63.0,
   "tyre": 69.0,
   "total": 345.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Schumacher",
@@ -6633,7 +6633,7 @@
   "raceStart": 68.0,
   "tyre": 74.0,
   "total": 370.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Schumacher",
@@ -6645,7 +6645,7 @@
   "raceStart": 72.0,
   "tyre": 78.0,
   "total": 390.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Schumacher",
@@ -6657,7 +6657,7 @@
   "raceStart": 77.0,
   "tyre": 83.0,
   "total": 415.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Schumacher",
@@ -6669,7 +6669,7 @@
   "raceStart": 81.0,
   "tyre": 87.0,
   "total": 435.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Schumacher",
@@ -6681,7 +6681,7 @@
   "raceStart": 86.0,
   "tyre": 92.0,
   "total": 460.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Schumacher",
@@ -6693,7 +6693,7 @@
   "raceStart": 90.0,
   "tyre": 96.0,
   "total": 480.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6705,7 +6705,7 @@
   "raceStart": 71.0,
   "tyre": 71.0,
   "total": 355.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6717,7 +6717,7 @@
   "raceStart": 76.0,
   "tyre": 76.0,
   "total": 380.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6729,7 +6729,7 @@
   "raceStart": 80.0,
   "tyre": 80.0,
   "total": 400.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6741,7 +6741,7 @@
   "raceStart": 85.0,
   "tyre": 85.0,
   "total": 425.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6753,7 +6753,7 @@
   "raceStart": 90.0,
   "tyre": 90.0,
   "total": 450.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6765,7 +6765,7 @@
   "raceStart": 94.0,
   "tyre": 94.0,
   "total": 470.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Senna",
@@ -6777,7 +6777,7 @@
   "raceStart": 99.0,
   "tyre": 99.0,
   "total": 495.0,
-  "series": 0
+  "series": 12
  },
  {
   "name": "Webber",
@@ -6789,7 +6789,7 @@
   "raceStart": 46.0,
   "tyre": 40.0,
   "total": 200.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Webber",
@@ -6801,7 +6801,7 @@
   "raceStart": 51.0,
   "tyre": 45.0,
   "total": 225.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Webber",
@@ -6813,7 +6813,7 @@
   "raceStart": 55.0,
   "tyre": 49.0,
   "total": 245.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Webber",
@@ -6825,7 +6825,7 @@
   "raceStart": 59.0,
   "tyre": 53.0,
   "total": 265.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Webber",
@@ -6837,7 +6837,7 @@
   "raceStart": 64.0,
   "tyre": 58.0,
   "total": 290.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Webber",
@@ -6849,7 +6849,7 @@
   "raceStart": 68.0,
   "tyre": 62.0,
   "total": 310.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Webber",
@@ -6861,7 +6861,7 @@
   "raceStart": 73.0,
   "tyre": 67.0,
   "total": 335.0,
-  "series": 0
+  "series": 6
  },
  {
   "name": "Bortoleto",
@@ -9249,7 +9249,7 @@
   "raceStart": 22.0,
   "tyre": 14.0,
   "total": 110.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Herbert",
@@ -9261,7 +9261,7 @@
   "raceStart": 27.0,
   "tyre": 19.0,
   "total": 135.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Herbert",
@@ -9273,7 +9273,7 @@
   "raceStart": 31.0,
   "tyre": 23.0,
   "total": 155.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Herbert",
@@ -9285,7 +9285,7 @@
   "raceStart": 36.0,
   "tyre": 28.0,
   "total": 180.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Herbert",
@@ -9297,7 +9297,7 @@
   "raceStart": 40.0,
   "tyre": 32.0,
   "total": 200.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Herbert",
@@ -9309,7 +9309,7 @@
   "raceStart": 45.0,
   "tyre": 37.0,
   "total": 225.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Herbert",
@@ -9321,7 +9321,7 @@
   "raceStart": 49.0,
   "tyre": 41.0,
   "total": 245.0,
-  "series": 0
+  "series": 3
  },
  {
   "name": "Piastri",
@@ -9333,7 +9333,7 @@
   "raceStart": 24.0,
   "tyre": 20.0,
   "total": 120.0,
-  "series": 13
+  "series": 3
  },
   {
   "name": "Piastri",
@@ -9345,7 +9345,7 @@
   "raceStart": 29.0,
   "tyre": 25.0,
   "total": 145.0,
-  "series": 13
+  "series": 3
  },
  {
   "name": "Piastri",
@@ -9357,7 +9357,7 @@
   "raceStart": 53.0,
   "tyre": 49.0,
   "total": 265.0,
-  "series": 13
+  "series": 3
  },
  {
   "name": "Colapinto",
@@ -9381,7 +9381,7 @@
   "raceStart": 21.0,
   "tyre": 37.0,
   "total": 145.0,
-  "series": 13
+  "series": 3
  },
  {
   "name": "Colapinto",
@@ -9393,7 +9393,7 @@
   "raceStart": 74.0,
   "tyre": 90.0,
   "total": 410.0,
-  "series": 13
+  "series": 3
  },
  {
   "name": "Lindblad",
@@ -9405,7 +9405,7 @@
   "raceStart": 52.0,
   "tyre": 48.0,
   "total": 220.0,
-  "series": 13
+  "series": 6
  },
  {
   "name": "Lindblad",
@@ -9417,7 +9417,7 @@
   "raceStart": 80.0,
   "tyre": 76.0,
   "total": 360.0,
-  "series": 13
+  "series": 6
  },
  {
   "name": "Gasly",
@@ -9429,7 +9429,7 @@
   "raceStart": 36.0,
   "tyre": 44.0,
   "total": 220.0,
-  "series": 13
+  "series": 6
  },
  {
   "name": "Gasly",
@@ -9441,7 +9441,7 @@
   "raceStart": 64.0,
   "tyre": 72.0,
   "total": 360.0,
-  "series": 13
+  "series": 6
  },
  {
   "name": "Bortoleto",
@@ -9453,7 +9453,7 @@
   "raceStart": 58.0,
   "tyre": 66.0,
   "total": 290.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Bortoleto",
@@ -9465,7 +9465,7 @@
   "raceStart": 86.0,
   "tyre": 94.0,
   "total": 430.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Bearman",
@@ -9477,7 +9477,7 @@
   "raceStart": 58.0,
   "tyre": 54.0,
   "total": 290.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Bearman",
@@ -9489,7 +9489,7 @@
   "raceStart": 86.0,
   "tyre": 82.0,
   "total": 430.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Hadjar",
@@ -9501,7 +9501,7 @@
   "raceStart": 62.0,
   "tyre": 58.0,
   "total": 290.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Hadjar",
@@ -9513,7 +9513,7 @@
   "raceStart": 90.0,
   "tyre": 86.0,
   "total": 430.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Antonelli",
@@ -9525,7 +9525,7 @@
   "raceStart": 50.0,
   "tyre": 54.0,
   "total": 290.0,
-  "series": 13
+  "series": 9
  },
   {
   "name": "Antonelli",
@@ -9537,7 +9537,7 @@
   "raceStart": 55.0,
   "tyre": 59.0,
   "total": 315.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Antonelli",
@@ -9549,7 +9549,7 @@
   "raceStart": 78.0,
   "tyre": 82.0,
   "total": 430.0,
-  "series": 13
+  "series": 9
  },
  {
   "name": "Piastri",
@@ -9561,7 +9561,7 @@
   "raceStart": 64.0,
   "tyre": 60.0,
   "total": 320.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Piastri",
@@ -9573,7 +9573,7 @@
   "raceStart": 91.0,
   "tyre": 87.0,
   "total": 455.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Colapinto",
@@ -9585,7 +9585,7 @@
   "raceStart": 56.0,
   "tyre": 68.0,
   "total": 320.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Colapinto",
@@ -9597,7 +9597,7 @@
   "raceStart": 83.0,
   "tyre": 95.0,
   "total": 455.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Lindblad",
@@ -9621,7 +9621,7 @@
   "raceStart": 95.0,
   "tyre": 87.0,
   "total": 455.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Gasly",
@@ -9633,7 +9633,7 @@
   "raceStart": 81.0,
   "tyre": 77.0,
   "total": 365.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Gasly",
@@ -9645,7 +9645,7 @@
   "raceStart": 108.0,
   "tyre": 104.0,
   "total": 500.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Bortoleto",
@@ -9657,7 +9657,7 @@
   "raceStart": 56.0,
   "tyre": 72.0,
   "total": 320.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Bortoleto",
@@ -9669,7 +9669,7 @@
   "raceStart": 83.0,
   "tyre": 99.0,
   "total": 455.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Bearman",
@@ -9681,7 +9681,7 @@
   "raceStart": 69.0,
   "tyre": 65.0,
   "total": 365.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Bearman",
@@ -9693,7 +9693,7 @@
   "raceStart": 96.0,
   "tyre": 92.0,
   "total": 500.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Hadjar",
@@ -9705,7 +9705,7 @@
   "raceStart": 77.0,
   "tyre": 65.0,
   "total": 365.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Hadjar",
@@ -9717,7 +9717,7 @@
   "raceStart": 104.0,
   "tyre": 92.0,
   "total": 500.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Antonelli",
@@ -9729,7 +9729,7 @@
   "raceStart": 65.0,
   "tyre": 81.0,
   "total": 365.0,
-  "series": 14
+  "series": 12
  },
  {
   "name": "Antonelli",
@@ -9741,6 +9741,6 @@
   "raceStart": 92.0,
   "tyre": 108.0,
   "total": 500.0,
-  "series": 14
+  "series": 12
  }
 ]
