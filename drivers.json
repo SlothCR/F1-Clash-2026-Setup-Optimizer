@@ -9335,6 +9335,18 @@
   "total": 120.0,
   "series": 13
  },
+  {
+  "name": "Piastri",
+  "rarity": "Paddock Pick",
+  "level": 2,
+  "overtaking": 21.0,
+  "defending": 37.0,
+  "qualifying": 33.0,
+  "raceStart": 29.0,
+  "tyre": 25.0,
+  "total": 145.0,
+  "series": 13
+ },
  {
   "name": "Piastri",
   "rarity": "Paddock Pick",
@@ -9357,6 +9369,18 @@
   "raceStart": 16.0,
   "tyre": 32.0,
   "total": 120.0,
+  "series": 13
+ },
+ {
+  "name": "Colapinto",
+  "rarity": "Paddock Pick",
+  "level": 2,
+  "overtaking": 33.0,
+  "defending": 25.0,
+  "qualifying": 29.0,
+  "raceStart": 21.0,
+  "tyre": 37.0,
+  "total": 145.0,
   "series": 13
  },
  {
@@ -9501,6 +9525,18 @@
   "raceStart": 50.0,
   "tyre": 54.0,
   "total": 290.0,
+  "series": 13
+ },
+  {
+  "name": "Antonelli",
+  "rarity": "Paddock Pick",
+  "level": 2,
+  "overtaking": 71.0,
+  "defending": 63.0,
+  "qualifying": 67.0,
+  "raceStart": 55.0,
+  "tyre": 59.0,
+  "total": 315.0,
   "series": 13
  },
  {
