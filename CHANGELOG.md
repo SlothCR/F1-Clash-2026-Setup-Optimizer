@@ -1,5 +1,12 @@
 # F1 Clash 2026 Setup Optimizer — Changelog
 
+## v4.1 (October 2026)
+- **Driver Series tiers corrected** — fixed Grand Prix suggestions dropping high-stat drivers because their `series` value was a placeholder, not their real unlock tier. The GP filter excludes any driver whose `series` > the category cap (Junior=3, Challenger=6, Contender=9, Champions=12), so wrong series = wrongly hidden (or wrongly shown).
+  - **Legendary** (was `0` → always passed every cap): set to real tiers — Junior/3: Fisichella, McLaren, G.Villeneuve, Herbert · Challenger/6: Webber, Massa, Coulthard, Rindt, Berger · Contender/9: Hunt, J.Villeneuve, Andretti, Button, D.Hill, Mansell · Champion/12: Senna, G.Hill, Fittipaldi, Lauda, Brabham, Fangio, Prost, Schumacher.
+  - **Paddock Pick** (was `13` → always hidden, exceeded max cap 12): Junior/3: Piastri, Colapinto · Challenger/6: Lindblad, Gasly · Contender/9: Antonelli, Bortoleto, Bearman, Hadjar.
+  - **Paddock Pick Turbo** (was `14` → always hidden): all 8 → Champion/12.
+  - **Data drift resolved — Excel is now the single source again.** Previously Paddock Pick/Turbo and Legendary "Herbert" existed ONLY in `drivers.json` (hand-added, bypassing the pipeline). All of them were added into `Stats.xlsx` (Drivers sheet): Herbert (7 levels, series 3) and all 16 Paddock drivers with FULL level 1–7 stats (the v4.0 "intermediate levels TBD" gap is now filled) and correct series. Rarity strings use the exact `Paddock Pick` / `Paddock Pick Turbo` spelling the app's CSS keys on. `export-stats.py` re-run cleanly regenerates all JSON from the Excel (drivers.json now 889 rows). Re-exporting is now safe — no JSON-only drivers remain. Backups saved as `drivers.json.bak` / `Stats.xlsx.bak`.
+
 ## v4.0 (August 2026)
 - **Paddock Pick Drivers** — new Special Edition tier with Normal and Turbo variants
   - 8 drivers: Piastri, Colapinto, Lindblad, Gasly, Bortoleto, Bearman, Hadjar, Antonelli
