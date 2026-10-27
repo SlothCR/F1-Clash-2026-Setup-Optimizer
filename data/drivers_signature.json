@@ -1,0 +1,8 @@
+[
+ {"name": "Lawson", "rarity": "Signature Collection", "level": 7, "overtaking": 105.0, "defending": 97.0, "qualifying": 93.0, "raceStart": 95.0, "tyre": 115.0, "total": 505.0, "series": 12},
+ {"name": "Sainz", "rarity": "Signature Collection", "level": 7, "overtaking": 104.0, "defending": 86.0, "qualifying": 84.0, "raceStart": 82.0, "tyre": 94.0, "total": 450.0, "series": 12},
+ {"name": "Piastri", "rarity": "Signature Collection", "level": 7, "overtaking": 123.0, "defending": 105.0, "qualifying": 103.0, "raceStart": 113.0, "tyre": 101.0, "total": 545.0, "series": 12},
+ {"name": "Hadjar", "rarity": "Signature Collection", "level": 7, "overtaking": 106.0, "defending": 116.0, "qualifying": 98.0, "raceStart": 96.0, "tyre": 94.0, "total": 510.0, "series": 12},
+ {"name": "Leclerc", "rarity": "Signature Collection", "level": 7, "overtaking": 104.0, "defending": 100.0, "qualifying": 112.0, "raceStart": 122.0, "tyre": 102.0, "total": 540.0, "series": 12},
+ {"name": "Verstappen", "rarity": "Signature Collection", "level": 7, "overtaking": 106.0, "defending": 114.0, "qualifying": 104.0, "raceStart": 102.0, "tyre": 124.0, "total": 550.0, "series": 12}
+]

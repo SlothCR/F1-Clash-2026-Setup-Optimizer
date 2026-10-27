@@ -1,5 +1,15 @@
 # F1 Clash 2026 Setup Optimizer — Changelog
 
+## v4.2 (October 2026)
+- **3 new Series 12 Epic Batteries** — Eco Cell+, Adrenaline, Thunderbolt (added to `Stats.xlsx`, re-exported; `components.json` now 448 rows).
+  - Stats at **Level 1 and Level 8 (Epic max level) only** — intermediate levels 2–7 TBD. Until they're added, these batteries only count when set to level 1 or 8.
+  - Impact / Duration / Recharge split, Team Score and card/coin costs not yet entered (not used by the app; OT Mode uses the total).
+- **New Series 12 Epic Rear Wing: The Reverse** — Level 1 and Level 8 (max) only, levels 2–7 TBD; `components.json` now 450 rows. Joins Dominus as the second Series 12 rear wing.
+- **New Series 12 Epic Brakes: Control** — Level 1 and Level 8 (max) only, levels 2–7 TBD; `components.json` now 452 rows. Joins Stabilix as the second Series 12 brakes.
+- **New Series 12 Epic Front Wing: Flex XXL** — Level 1 and Level 8 (max) only, levels 2–7 TBD; `components.json` now 454 rows. Joins Loose Fit as the second Series 12 front wing.
+- **New Series 12 Epic Engine: The Singularity** — Level 1 and Level 8 (max) only, levels 2–7 TBD; `components.json` now 456 rows. The first Series 12 engine.
+- **Names + order aligned to the in-game list** — renamed "EcoCell+" → **Eco Cell+** and "Reverse" → **The Reverse**; Series 12 parts reordered so the inventory shows them in game order (Control before Stabilix, The Reverse before Dominus, Flex XXL before Loose Fit, Eco Cell+ → Adrenaline → Thunderbolt). All existing component names already matched.
+
 ## v4.1 (October 2026)
 - **Driver Series tiers corrected** — fixed Grand Prix suggestions dropping high-stat drivers because their `series` value was a placeholder, not their real unlock tier. The GP filter excludes any driver whose `series` > the category cap (Junior=3, Challenger=6, Contender=9, Champions=12), so wrong series = wrongly hidden (or wrongly shown).
   - **Legendary** (was `0` → always passed every cap): set to real tiers — Junior/3: Fisichella, McLaren, G.Villeneuve, Herbert · Challenger/6: Webber, Massa, Coulthard, Rindt, Berger · Contender/9: Hunt, J.Villeneuve, Andretti, Button, D.Hill, Mansell · Champion/12: Senna, G.Hill, Fittipaldi, Lauda, Brabham, Fangio, Prost, Schumacher.

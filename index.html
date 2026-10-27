@@ -89,6 +89,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .rarity-Starter{background:#888;color:white}
 .rarity-PaddockPick{background:#E8E8E8;color:#333}
 .rarity-PaddockPickTurbo{background:#00BCD4;color:white}
+.rarity-SignatureCollection{background:#15714F;color:white}
 
 /* Component slots */
 .slot{background:var(--card2);border-radius:6px;padding:10px;margin-bottom:8px;border:1px solid var(--border);transition:border-color .2s}
@@ -278,6 +279,56 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
   .inv-group-header .type-name{font-size:11px}
   .tab-btn{font-size:9px;padding:4px 6px}
 }
+
+/* ====================================================================
+   v2 MOTION + POLISH LAYER (additive — Emil-skills principles)
+   Restraint: short, ease-out, nothing bouncy. Respects reduced-motion.
+   ==================================================================== */
+
+/* Tab crossfade: panels fade+rise in when shown */
+.tab-pane-enter{animation:tabIn .22s cubic-bezier(0.22,1,0.36,1)}
+@keyframes tabIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Results rows ease in when a table re-renders */
+.rec-table tbody tr.row-in,
+.ai-compare-table tbody tr.row-in{animation:rowIn .26s cubic-bezier(0.22,1,0.36,1) both}
+@keyframes rowIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* KPI value: subtle lift the moment it lands on a new number */
+.kpi .val.kpi-bump{animation:kpiBump .3s ease-out}
+@keyframes kpiBump{0%{transform:translateY(-2px);opacity:.6}100%{transform:none;opacity:1}}
+
+/* Inventory group: animate open/close via max-height instead of display flip.
+   (JS adds .anim to opt into this; falls back to the original display toggle otherwise.) */
+.inv-group-body.anim{display:block;max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .28s cubic-bezier(0.22,1,0.36,1),opacity .2s ease,padding .28s ease;
+  padding-top:0;padding-bottom:0}
+.inv-group-body.anim.open{max-height:1600px;opacity:1;padding-top:4px;padding-bottom:8px}
+
+/* Tab button underline slide (polish on the existing active state) */
+.tab-btn{position:relative}
+.tab-btn::after{content:'';position:absolute;left:8px;right:8px;bottom:0;height:2px;
+  background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .2s ease;opacity:.0}
+.tab-btn.active::after{transform:scaleX(1);opacity:.9}
+
+/* ---- break-ui hardening: survive worst-case data ---- */
+/* Long driver/component names in result tables: ellipsis instead of blowing the layout */
+.rec-table td .comp-name{display:inline-block;max-width:220px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom}
+.ai-compare-table td:nth-child(2){max-width:200px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+/* KPI values never overflow their card on huge totals */
+.kpi .val,.totals-bar .kpi .val{overflow:hidden;text-overflow:ellipsis;max-width:100%}
+/* Empty-state note reads as intentional, not broken */
+.empty-note{color:var(--text2);font-size:12px;padding:10px;text-align:center;
+  border:1px dashed var(--border);border-radius:6px;margin:4px 0}
+
+/* Accessibility: honor the OS "reduce motion" setting — kill all of the above */
+@media(prefers-reduced-motion:reduce){
+  .tab-pane-enter,.rec-table tbody tr.row-in,.ai-compare-table tbody tr.row-in,
+  .kpi .val.kpi-bump{animation:none!important}
+  .inv-group-body.anim{transition:none!important}
+}
 </style>
 </head>
 <body>
@@ -289,7 +340,7 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
 </div>
 
 <div class="header" style="position:relative">
-  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.9</span></h1>
+  <h1><span class="f1">F1</span> Clash 2026 Setup Optimizer <span class="year">v3.9 · motion</span></h1>
   <button id="themeToggle" onclick="toggleTheme()" style="background:none;border:none;font-size:20px;cursor:pointer;padding:4px 8px" title="Toggle Day/Night mode">🌙</button>
   <span style="position:absolute;top:50%;right:12px;transform:translateY(-50%);font-size:9px;font-style:italic;color:var(--text2)">Inspired by TR The Flash's work</span>
   <div class="kpi-bar" id="kpiBar">
@@ -503,8 +554,15 @@ body[data-theme="light"] .loading-overlay{background:#f0f2f5}
 let COMPONENTS = [];
 let COMP_META = {};
 const COMP_TYPES = ["Brakes","Gearbox","RearWing","FrontWing","Suspension","Engine","Battery"];
-const RARITY_MAX = { Starter: 1, Common: 11, Rare: 9, Epic: 8, Legendary: 7, "Paddock Pick": 7, "Paddock Pick Turbo": 7 };
-const RARITY_ORDER = ['Common','Rare','Epic','Legendary','Paddock Pick','Paddock Pick Turbo'];
+const RARITY_MAX = { Starter: 1, Common: 11, Rare: 9, Epic: 8, Legendary: 7, "Paddock Pick": 7, "Paddock Pick Turbo": 7, "Signature Collection": 7 };
+const RARITY_ORDER = ['Common','Rare','Epic','Legendary','Paddock Pick','Paddock Pick Turbo','Signature Collection'];
+// In-game "Special Editions" section: Paddock Picks (normal + Turbo) first, then Signature Collection
+const SPECIAL_EDITION_RARITIES = ['Paddock Pick', 'Paddock Pick Turbo', 'Signature Collection'];
+// Inventory tie-break for parts in the same series (lower = listed first); unlisted parts keep data order
+// (in-game order, per CHANGELOG v4.2 — the Excel row order no longer guarantees it)
+const SAME_SERIES_ORDER = { 'Control': 0, 'Stabilix': 1, 'Flex XXL': 0, 'Loose Fit': 1, 'The Reverse': 0, 'Dominus': 1,
+                            'Eco Cell+': 0, 'Adrenaline': 1, 'Thunderbolt': 2 };
+const SPECIAL_EDITION_LABEL = { 'Paddock Pick': 'Paddock Pick', 'Paddock Pick Turbo': 'Paddock Pick: Turbo', 'Signature Collection': 'Signature' };
 function rarityClass(r) { return r.replace(/\s+/g, ''); }
 
 let DRIVERS = [];
@@ -815,7 +873,8 @@ function renderInventory() {
     const meta = (COMP_META[type] || []).slice().sort((a, b) => {
       if (a.rarity === 'Starter' && b.rarity !== 'Starter') return -1;
       if (b.rarity === 'Starter' && a.rarity !== 'Starter') return 1;
-      return (a.series || 99) - (b.series || 99);
+      return (a.series || 99) - (b.series || 99)
+        || (SAME_SERIES_ORDER[a.name] ?? 50) - (SAME_SERIES_ORDER[b.name] ?? 50);
     });
     const displayType = type.replace(/([A-Z])/g, ' $1').trim();
     const ownedCount = meta.filter(m => (state.inventory[m.name] || 0) > 0).length;
@@ -872,8 +931,8 @@ function renderDriverInventory() {
   const container = document.getElementById('driverInventorySlots');
   container.innerHTML = '';
   
-  // Combine Paddock Pick and Paddock Pick Turbo into one section
-  const ppCombinedRarities = ['Paddock Pick', 'Paddock Pick Turbo'];
+  // Special Editions (in-game section): Paddock Pick, Paddock Pick Turbo and Signature Collection in one group
+  const ppCombinedRarities = SPECIAL_EDITION_RARITIES;
   const renderOrder = RARITY_ORDER.filter(r => !ppCombinedRarities.includes(r));
   
   renderOrder.forEach(rarity => {
@@ -914,24 +973,27 @@ function renderDriverInventory() {
     container.appendChild(group);
   });
 
-  // Render combined Paddock Pick section
-  const ppMeta = ppCombinedRarities.flatMap(r => (DRIVER_META[r] || []).slice()).sort((a, b) => a.name.localeCompare(b.name) || a.rarity.localeCompare(b.rarity));
+  // Render combined Special Edition section: grouped by driver name (A–Z); within each driver
+  // the order is Signature Collection, Paddock Pick, Paddock Pick Turbo
+  const SE_ORDER = { 'Signature Collection': 0, 'Paddock Pick': 1, 'Paddock Pick Turbo': 2 };
+  const ppMeta = ppCombinedRarities.flatMap(r => (DRIVER_META[r] || []).slice())
+    .sort((a, b) => a.name.localeCompare(b.name) || (SE_ORDER[a.rarity] ?? 9) - (SE_ORDER[b.rarity] ?? 9));
   if (ppMeta.length > 0) {
     const ppOwnedCount = ppMeta.filter(m => (state.driverInventory[m.key] || 0) > 0).length;
     const ppGroup = document.createElement('div');
     ppGroup.className = 'inv-group';
     ppGroup.innerHTML = `
-      <div class="inv-group-header" onclick="toggleGroup('drv-PaddockPick')">
-        <span class="type-name">Paddock Pick Drivers</span>
+      <div class="inv-group-header" onclick="toggleGroup('drv-SpecialEdition')">
+        <span class="type-name">Special Edition Drivers</span>
         <span class="owned-count">${ppOwnedCount}/${ppMeta.length} owned</span>
-        <span class="chevron" id="chev-drv-PaddockPick">&#9654;</span>
+        <span class="chevron" id="chev-drv-SpecialEdition">&#9654;</span>
       </div>
-      <div class="inv-group-body" id="body-drv-PaddockPick">
+      <div class="inv-group-body" id="body-drv-SpecialEdition">
         ${ppMeta.map(m => {
           const lvl = state.driverInventory[m.key] || 0;
           const safeKey = m.key.replace(/[\s.]/g,'_');
           const isBoosted = state.boostedDrivers[m.key] || false;
-          const label = m.rarity === 'Paddock Pick Turbo' ? 'Turbo' : 'Normal';
+          const label = SPECIAL_EDITION_LABEL[m.rarity] || m.rarity;
           return `<div class="inv-row">
             <span class="comp-name">${m.name}</span>
             <span class="slot-rarity rarity-${rarityClass(m.rarity)}">${label}</span>
@@ -1063,10 +1125,11 @@ function onDriverInventoryChange(key, val, maxLvl) {
   if (input) { input.value = v; input.classList.toggle('owned', v > 0); }
 
   RARITY_ORDER.forEach(rarity => {
-    const meta = DRIVER_META[rarity] || [];
-    if (meta.find(m => m.key === key)) {
+    const isSpecial = SPECIAL_EDITION_RARITIES.includes(rarity);
+    const meta = isSpecial ? SPECIAL_EDITION_RARITIES.flatMap(r => DRIVER_META[r] || []) : (DRIVER_META[rarity] || []);
+    if ((DRIVER_META[rarity] || []).find(m => m.key === key)) {
       const ownedCount = meta.filter(m => (state.driverInventory[m.key] || 0) > 0).length;
-      const bodyEl = document.getElementById(`body-drv-${rarity}`);
+      const bodyEl = document.getElementById(isSpecial ? 'body-drv-SpecialEdition' : `body-drv-${rarity}`);
       if (bodyEl) {
         const countEl = bodyEl.previousElementSibling.querySelector('.owned-count');
         if (countEl) countEl.textContent = `${ownedCount}/${meta.length} owned`;
@@ -2069,6 +2132,8 @@ async function init() {
       fetch('data/boosts.json').then(r => { if (!r.ok) throw new Error('boosts.json'); return r.json(); }),
       fetch('data/track_stats.json').then(r => { if (!r.ok) throw new Error('track_stats.json'); return r.json(); })
     ]);
+    // Signature Collection drivers now come from drivers.json (Stats.xlsx export, 10.27.26);
+    // data/drivers_signature.json is no longer loaded.
 
     processComponents(compData);
     processDrivers(driverData);
@@ -2108,6 +2173,96 @@ async function init() {
 }
 
 init();
+</script>
+
+<script>
+// ====================================================================
+// v2 MOTION LAYER — wraps existing functions, does not modify them.
+// Principles (Emil's skills): short durations, ease-out, restraint,
+// respect prefers-reduced-motion, never block interaction.
+// ====================================================================
+(function(){
+  const REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 1. KPI count-up ----------------------------------------------------
+  // Animate a number element from its current value to a target. Keeps the
+  // original suffix (e.g. the pit-time has no suffix here; values are plain).
+  function animateNumber(el, to, decimals){
+    if (REDUCE || el.__animating) { el.textContent = decimals ? to.toFixed(decimals) : Math.round(to); return; }
+    const from = parseFloat((el.textContent||'0').replace(/[^0-9.\-]/g,'')) || 0;
+    if (from === to) return;
+    el.__animating = true;
+    const dur = 420, t0 = performance.now();
+    const ease = x => 1 - Math.pow(1 - x, 3); // ease-out cubic
+    function step(now){
+      const p = Math.min(1,(now-t0)/dur);
+      const v = from + (to-from)*ease(p);
+      el.textContent = decimals ? v.toFixed(decimals) : Math.round(v).toString();
+      if (p<1){ requestAnimationFrame(step); }
+      else { el.textContent = decimals ? to.toFixed(decimals) : Math.round(to).toString();
+             el.__animating=false; el.classList.remove('kpi-bump'); void el.offsetWidth; el.classList.add('kpi-bump'); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  const KPI_IDS = [['kSpd',0],['kCrn',0],['kPU',0],['kQual',0],['kPit',2],['kOM',0],['kTotal',0]];
+
+  // Wrap recalculate: capture the KPI numbers it writes, then animate to them
+  // + flag freshly-rendered result rows for the row-in animation.
+  const _recalculate = window.recalculate;
+  window.recalculate = function(){
+    // snapshot current KPI text before recalculate overwrites it
+    const before = {};
+    KPI_IDS.forEach(([id])=>{ const e=document.getElementById(id); before[id]= e?e.textContent:null; });
+
+    _recalculate.apply(this, arguments);   // original does its full work
+
+    // read the targets recalculate just set, restore the "before" text, then animate to target
+    KPI_IDS.forEach(([id,dec])=>{
+      const el=document.getElementById(id); if(!el) return;
+      const target = parseFloat((el.textContent||'0').replace(/[^0-9.\-]/g,''))||0;
+      el.textContent = before[id] != null ? before[id] : (dec?target.toFixed(dec):target);
+      animateNumber(el, target, dec);
+    });
+
+    // stagger-in the result rows that were just rebuilt
+    flagRows('customBody'); flagRows('overallBody');
+  };
+
+  function flagRows(tbodyId){
+    if (REDUCE) return;
+    const tb=document.getElementById(tbodyId); if(!tb) return;
+    const rows=[...tb.querySelectorAll('tr')];
+    rows.forEach((r,i)=>{ r.classList.add('row-in'); r.style.animationDelay=(i*22)+'ms';
+      r.addEventListener('animationend',()=>{r.classList.remove('row-in');r.style.animationDelay='';},{once:true}); });
+  }
+
+  // ---- 2. Tab crossfade ---------------------------------------------------
+  const _showTab = window.showTab;
+  window.showTab = function(tab, btn){
+    _showTab.apply(this, arguments);
+    if (REDUCE) return;
+    const pane = document.getElementById(tab==='results'?'tabResults':'tabGranPrix');
+    if (pane){ pane.classList.remove('tab-pane-enter'); void pane.offsetWidth; pane.classList.add('tab-pane-enter'); }
+  };
+
+  // ---- 3. Animated inventory group collapse -------------------------------
+  // Opt the group bodies into the CSS max-height transition. The original
+  // toggleGroup just adds/removes .open, which now animates because of .anim.
+  const _toggleGroup = window.toggleGroup;
+  window.toggleGroup = function(id){
+    const body=document.getElementById('body-'+id);
+    if (body && !REDUCE) body.classList.add('anim');
+    _toggleGroup.apply(this, arguments);
+  };
+
+  // On first render, mark existing group bodies as animatable so the very
+  // first open also transitions. (renderInventory runs inside init → renderAll.)
+  window.addEventListener('load', ()=>{
+    if (REDUCE) return;
+    document.querySelectorAll('.inv-group-body').forEach(b=>b.classList.add('anim'));
+  });
+})();
 </script>
 </body>
 </html>
