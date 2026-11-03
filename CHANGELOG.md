@@ -1,5 +1,26 @@
 # F1 Clash 2026 Setup Optimizer — Changelog
 
+## v4.3.1 (November 2026)
+- **Stats update only** (`Stats.xlsx` re-exported; no page changes, no new drivers or parts — still 938 drivers, 498 components).
+- **Drivers, Level 2 added:** Antonelli (Paddock Pick: Turbo), Lawson and Verstappen (Signature Collection).
+- **Fangio (Legendary): Levels 2 and 3 added.** Levels 4–7 still TBD.
+- **Series 12 parts, Level 2 added:** Adrenaline and Thunderbolt (Battery), The Reverse (Rear Wing).
+- Files changed: `data/drivers.json`, `data/components.json`.
+
+## v4.3 (October 2026)
+- **New Special Edition tier: Signature Collection.** 6 drivers: Lawson, Sainz, Piastri, Hadjar, Leclerc, Verstappen.
+  - Added to `Stats.xlsx` and exported (`drivers.json` now 938 rows). Max level 7, with stats at Level 1 and Level 7 only. Levels 2–6 are TBD and score 0 until they're added.
+  - Series 12, except Sainz (series 9).
+  - Green badge (`#15714F`, white text).
+- **Special Edition Drivers section** (was "Paddock Pick Drivers"). Groups Signature Collection, Paddock Pick and Paddock Pick Turbo by driver name (A–Z). Within each driver the order is **Signature → Paddock Pick → Paddock Pick: Turbo**. The Turbo badge now reads "Paddock Pick: Turbo", and the owned count updates live for the whole group.
+- **New Legendary driver: Barrichello** (series 9). Level 1 (285) and Level 7 (440) only; levels 2–6 TBD.
+- **Fangio and Senna (Legendary): Level 1 corrected** to match in-game stats (Fangio 365, Senna 375). Levels 2–7 cleared pending verified values, so they score 0 above Level 1 for now.
+- **Paddock Pick / Turbo and Herbert:** the Total column is now filled in. Some Level 2 stats were added (Bearman Turbo, Colapinto, Hadjar).
+- **Series 12 parts get rows for every level** (L1–L8). Levels 3–7 are placeholders; Flex XXL and The Singularity also have Level 2 stats.
+- **Inventory order for parts in the same series** is now set in the page (`SAME_SERIES_ORDER`) instead of relying on the Excel row order: Control → Stabilix, Flex XXL → Loose Fit, The Reverse → Dominus, Eco Cell+ → Adrenaline → Thunderbolt.
+- **Motion + polish:** short fade-ins on tab switches, AI Compare rows and KPI updates. Honours the OS "reduce motion" setting.
+- The previous page is kept as `index-legacy.html` (v4.2).
+
 ## v4.2 (October 2026)
 - **3 new Series 12 Epic Batteries** — Eco Cell+, Adrenaline, Thunderbolt (added to `Stats.xlsx`, re-exported; `components.json` now 448 rows).
   - Stats at **Level 1 and Level 8 (Epic max level) only** — intermediate levels 2–7 TBD. Until they're added, these batteries only count when set to level 1 or 8.
